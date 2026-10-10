@@ -1,0 +1,192 @@
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, ArrowRight, ArrowLeft, X, Copy, Check } from 'lucide-react';
+import { Dialog, DialogContent, DialogClose, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { DeviceScene } from '@/components/device-scene';
+import { ContactForm } from '@/components/contact-form';
+import { Vitals } from '@/components/vitals';
+import { projects, email, contra, type Project } from '@/lib/projects';
+
+export function Portfolio() {
+  const root = useRef<HTMLDivElement>(null);
+  const workScroll = useRef(0);
+  const opener = useRef<HTMLButtonElement | null>(null);
+  const dialogBody = useRef<HTMLDivElement>(null);
+  const nextAnimation = useRef<gsap.core.Tween | null>(null);
+  const pendingFocus = useRef<(() => void) | null>(null);
+  const [project, setProject] = useState<Project>(projects[0]);
+  const [open, setOpen] = useState(false);
+  const [manualReduced, setManualReduced] = useState(false);
+  const [systemReduced, setSystemReduced] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const reduced = manualReduced || systemReduced;
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setSystemReduced(preference.matches);
+    update();
+    try { setManualReduced(localStorage.getItem('noawezah-motion') === 'reduce'); } catch {}
+    preference.addEventListener('change', update);
+    return () => { preference.removeEventListener('change', update); if (pendingFocus.current) window.removeEventListener('scrollend', pendingFocus.current); };
+  }, []);
+  useEffect(() => {
+    const node = root.current;
+    if (!node) return;
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = reduced ? 'auto' : '';
+    let disposed = false;
+    let cleanup = () => {};
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+      if (disposed) return;
+      gsap.registerPlugin(ScrollTrigger);
+      const home = node.querySelector<HTMLElement>('.home-chapter')!;
+      const work = node.querySelector<HTMLElement>('.work-chapter')!;
+      const context = gsap.context(() => {
+        if (!reduced && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          gsap.from('.headline-line', { yPercent: 112, skewY: 4, duration: .68, stagger: .11, ease: 'power3.out', clearProps: 'transform' });
+          gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el => gsap.from(el, { y: 24, opacity: .4, duration: .5, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true } }));
+        }
+      }, node);
+      const media = gsap.matchMedia();
+      media.add('(min-width: 900px) and (hover: hover) and (pointer: fine)', () => {
+        if (reduced || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const track = node.querySelector('.chapter-track');
+        const back = node.querySelector<HTMLButtonElement>('.back-home')!;
+        const rows = [...node.querySelectorAll<HTMLButtonElement>('.project-index .project-row')];
+        const cue = node.querySelector('.work-scroll-cue');
+        let backVisible = false;
+        let cueVisible = false;
+        gsap.set(back, { autoAlpha: 0, y: 8 });
+        gsap.set(cue, { autoAlpha: 0, y: 8 });
+        back.disabled = true;
+        rows.forEach(row => { row.disabled = true; });
+        function hideBack() {
+          showCue(false);
+          if (!backVisible) return;
+          backVisible = false;
+          back.disabled = true;
+          gsap.killTweensOf(back);
+          gsap.set(back, { autoAlpha: 0, y: 8 });
+        }
+        function revealBack() {
+          if (backVisible) return;
+          backVisible = true;
+          back.disabled = false;
+          gsap.to(back, { autoAlpha: 1, y: 0, duration: .35, ease: 'power3.out' });
+        }
+        function showCue(show: boolean) {
+          if (cueVisible === show) return;
+          cueVisible = show;
+          gsap.killTweensOf(cue);
+          gsap.to(cue, { autoAlpha: show ? 1 : 0, y: show ? 0 : 8, duration: show ? .35 : .15, ease: 'power3.out' });
+        }
+        let active = -1;
+        const timeline = gsap.timeline({ onUpdate: function(this: gsap.core.Timeline) {
+          const progress = this.progress();
+          if (progress >= .56 && (this.scrollTrigger?.progress || 0) >= .56) revealBack();
+          else hideBack();
+          showCue(progress >= .56 && progress < .84 && (this.scrollTrigger?.progress || 0) >= .56);
+          rows.forEach((row, index) => { row.disabled = progress <= .62 + index * .08; });
+        }, scrollTrigger: {
+          trigger: '.chapter-shell', start: 'top top+=86', end: () => '+=' + window.innerHeight * 2.3, pin: true, scrub: .7, invalidateOnRefresh: true,
+          onRefresh: self => { workScroll.current = self.start + (self.end - self.start) * .565; },
+          onUpdate: self => {
+            if (self.progress < .56) hideBack();
+            const chapter = self.progress >= .28 ? 1 : 0;
+            if (chapter !== active) { active = chapter; home.inert = chapter === 1; work.inert = chapter === 0; home.setAttribute('aria-hidden', String(chapter === 1)); work.setAttribute('aria-hidden', String(chapter === 0)); }
+          },
+          onScrubComplete: self => { if (self.progress >= .56) revealBack(); },
+        }});
+        timeline.to(track, { x: () => -node.clientWidth, duration: .56, ease: 'none' }, 0)
+          .to('.ghost-mark', { x: -70, rotation: 2, duration: .56, ease: 'none' }, 0)
+          .to('.signal-ribbon', { x: 65, rotation: 0, duration: .56, ease: 'none' }, 0)
+          .fromTo(rows, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: .14, stagger: .08, ease: 'power2.out' }, .62)
+          .fromTo('.work-bottom', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: .08, ease: 'power2.out' }, .84)
+          .to({}, { duration: .08 }, .92);
+        const trigger = timeline.scrollTrigger;
+        workScroll.current = trigger ? trigger.start + (trigger.end - trigger.start) * .565 : 0;
+        work.inert = true;
+        work.setAttribute('aria-hidden', 'true');
+        return () => { gsap.killTweensOf([back, cue]); gsap.set(back, { clearProps: 'opacity,visibility,transform' }); gsap.set(cue, { clearProps: 'opacity,visibility,transform' }); back.disabled = false; rows.forEach(row => { row.disabled = false; }); home.inert = false; work.inert = false; home.removeAttribute('aria-hidden'); work.removeAttribute('aria-hidden'); workScroll.current = 0; };
+      }, node);
+      media.add('(max-width: 899px), (pointer: coarse)', () => {
+        if (reduced || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        gsap.from('.project-index .project-row', { opacity: 0, y: 24, duration: .5, stagger: .14, ease: 'power3.out', scrollTrigger: { trigger: work, start: 'top 78%', once: true } });
+      }, node);
+      cleanup = () => { media.revert(); context.revert(); };
+    });
+    return () => { disposed = true; cleanup(); document.documentElement.style.scrollBehavior = previousScrollBehavior; };
+  }, [reduced]);
+  useEffect(() => {
+    if (!open) { nextAnimation.current?.kill(); if (dialogBody.current) dialogBody.current.style.clipPath = ''; }
+    return () => { nextAnimation.current?.kill(); };
+  }, [open]);
+  function navigate(destination: 'home' | 'work') {
+    if (pendingFocus.current) { window.removeEventListener('scrollend', pendingFocus.current); pendingFocus.current = null; }
+    const node = document.getElementById(destination);
+    const navHeight = root.current?.querySelector('.site-nav')?.getBoundingClientRect().height || 86;
+    const top = destination === 'home' ? 0 : workScroll.current || (node?.getBoundingClientRect().top || 0) + window.scrollY - navHeight;
+    window.scrollTo({ top, behavior: reduced ? 'instant' : 'smooth' });
+    if (destination === 'work') {
+      const focus = () => { pendingFocus.current = null; const heading = document.getElementById('work-title'); const bounds = heading?.getBoundingClientRect(); if (bounds && bounds.top >= 0 && bounds.top < window.innerHeight && Math.abs(bounds.left - window.innerWidth * .04) < 80) heading?.focus({ preventScroll: true }); };
+      if (reduced || Math.abs(window.scrollY - top) < 1) focus(); else { pendingFocus.current = focus; window.addEventListener('scrollend', focus, { once: true }); }
+    }
+  }
+  function openProject(selected: Project, button: HTMLButtonElement) {
+    nextAnimation.current?.kill();
+    opener.current = button;
+    setProject(selected);
+    setOpen(true);
+  }
+  function moveRow(event: React.PointerEvent<HTMLButtonElement>) {
+    if (reduced || event.pointerType !== 'mouse' || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - bounds.left, y = event.clientY - bounds.top;
+    event.currentTarget.style.setProperty('--pointer-x', x + 'px');
+    event.currentTarget.style.setProperty('--pointer-y', y + 'px');
+    event.currentTarget.style.setProperty('--hover-x', (x / bounds.width - .5) * 16 + 'px');
+    event.currentTarget.dataset.pointer = 'true';
+  }
+  async function nextProject() {
+    const next = project.slug === 'pebble' ? projects[1] : projects[0];
+    const body = dialogBody.current;
+    if (!body || reduced) { setProject(next); return; }
+    const { gsap } = await import('gsap');
+    nextAnimation.current?.kill();
+    nextAnimation.current = gsap.to(body, { clipPath: 'inset(0 0 0 100%)', duration: .22, ease: 'power2.in', onComplete: () => {
+      setProject(next);
+      body.closest<HTMLElement>('[data-project-scroll]')?.scrollTo({ top: 0, behavior: 'instant' });
+      gsap.set(body, { clipPath: 'inset(0 100% 0 0)' });
+      nextAnimation.current = gsap.to(body, { clipPath: 'inset(0 0 0 0)', duration: .4, ease: 'power3.out', clearProps: 'clipPath' });
+    }});
+  }
+  async function copyEmail() {
+    try { await navigator.clipboard.writeText(email); setCopied(true); setTimeout(() => setCopied(false), 2500); } catch { setCopied(false); }
+  }
+  function toggleMotion() {
+    const next = !manualReduced;
+    setManualReduced(next);
+    try { localStorage.setItem('noawezah-motion', next ? 'reduce' : 'full'); } catch {}
+  }
+  return <Dialog open={open} onOpenChange={setOpen}><div ref={root} className="portfolio" data-reduced={reduced}>
+    <Vitals /><a href="#main" className="skip-link">Skip to content</a>
+    <header className="site-nav"><button className="wordmark" onClick={() => navigate('home')} aria-label="Noawezah home">noawezah<span>.</span></button><span className="nav-meta">Independent web design<br />Ahad Zaidi / Bucharest</span><nav aria-label="Main navigation"><button onClick={() => navigate('work')}>Work <ArrowUpRight size={15} aria-hidden /></button><a href="#approach">Approach</a><a href="#contact" className="nav-contact">Let’s talk <ArrowUpRight size={16} aria-hidden /></a></nav></header>
+    <main id="main">
+      <div className="chapter-shell" id="home"><div className="chapter-track">
+        <section className="home-chapter" aria-labelledby="home-title"><div className="chapter-meta"><span>Small businesses. Strong identities.</span><span>Design + development</span></div><h1 id="home-title" aria-label="Local business. Uncommon websites."><span className="headline-mask"><span className="headline-line">LOCAL BUSINESS.</span></span><span className="headline-mask"><span className="headline-line accent">UNCOMMON</span></span><span className="headline-mask"><span className="headline-line">WEBSITES.</span></span></h1><div className="home-bottom"><p>Your place has character.<br />Your website should, too.</p><button className="work-cta" onClick={() => navigate('work')}>Explore selected work <span><ArrowUpRight size={28} aria-hidden /></span></button></div><div className="signal-ribbon" aria-hidden><span>REAL PLACES.</span><span>DIGITAL PRESENCE.</span><span>REAL PLACES.</span></div><span className="ghost-mark" aria-hidden>n.</span><span className="scroll-cue mono">Scroll to meet the work <ArrowRight size={15} aria-hidden /></span></section>
+        <section className="work-chapter" id="work" aria-labelledby="work-title"><div className="chapter-meta"><button onClick={() => navigate('home')} className="back-home"><ArrowLeft size={16} aria-hidden /> Back to home</button><span>Selected work / 02 projects</span></div><h2 id="work-title" tabIndex={-1}>BUILT FOR<br /><span className="accent">THEIR WORLD.</span></h2><div className="project-index">{projects.map(p => <button key={p.slug} className="project-row" onClick={event => openProject(p, event.currentTarget)} onPointerMove={moveRow} onPointerLeave={event => { delete event.currentTarget.dataset.pointer; event.currentTarget.style.setProperty('--hover-x', '0px'); }} aria-label={`Explore ${p.name} project`}><span className="project-number mono">{p.number} / {p.category}</span><span className="project-name">{p.name}</span><span className="project-thumb"><Image src={p.venue} alt="" fill sizes="160px" /></span><span className="project-action">Explore <ArrowUpRight size={24} aria-hidden /></span><span className="cursor-tether" aria-hidden /><span className="cursor-cross" aria-hidden /></button>)}</div><span className="work-scroll-cue mono">Continue scrolling to reveal the projects <ArrowRight size={15} aria-hidden /></span><div className="work-bottom"><span>Websites that feel like the places behind them.</span><a href="#contact">Have a place in mind? <ArrowUpRight size={16} aria-hidden /></a></div></section>
+      </div></div>
+      <section className="in-context section-pad" aria-labelledby="context-title"><div className="section-caption mono"><span>01 / THE WORK IN CONTEXT</span><span>From the room to the screen</span></div><div className="context-heading" data-reveal><h2 id="context-title">THE PLACE.<br /><span className="accent">THE PRESENCE.</span></h2><p>A website is another way<br />to step inside your business.<br />It should feel like it belongs.</p></div>{projects.map(p => <article className="project-feature" key={p.slug}><div className="feature-heading"><div><span className="mono">{p.number} / {p.category} / BUCHAREST</span><h3>{p.name}</h3></div><span className={`project-status ${p.slug === 'pebble' ? 'status-progress' : ''}`}>{p.status}</span></div><div className="scene-open"><DeviceScene project={p} reduced={reduced} /><button className="scene-open-label" onClick={event => openProject(p, event.currentTarget)} aria-label={`Explore ${p.name} project`}>Explore project <ArrowUpRight size={18} aria-hidden /></button></div><div className="feature-description"><p>{p.title}<br /><span>{p.subtitle}</span></p><Link href={`/work/${p.slug}`}>Project details <ArrowUpRight size={18} aria-hidden /></Link></div></article>)}</section>
+      <section id="approach" className="approach section-pad" aria-labelledby="approach-title"><div className="section-caption mono"><span>02 / THE APPROACH</span><span>One person. A considered process.</span></div><div className="approach-layout"><h2 id="approach-title" data-reveal>YOUR BUSINESS.<br /><span>MY ATTENTION.</span></h2><div className="approach-copy" data-reveal><p className="large-copy">I’m Ahad. I design and build websites for businesses with a world of their own.</p><p>So far, that has meant a café and a bar. The next place might be yours. I’m interested in what makes your business different, then turning that into a website that feels right and works well.</p><span className="signature">Ahad “noawezah” Zaidi</span></div></div><div className="process-list">{[['01', 'Understand the place', 'The people, the atmosphere, and what visitors need to find.'], ['02', 'Give it a digital identity', 'A visual direction and an experience shaped around your business.'], ['03', 'Build it to work', 'Responsive development, considered motion, and the details checked before launch.']].map(([number, title, description]) => <div key={number} className="process-row" data-reveal><span className="mono">{number}</span><h3>{title}</h3><p>{description}</p></div>)}</div></section>
+      <section id="contact" className="contact section-pad" aria-labelledby="contact-title"><div className="section-caption mono"><span>03 / WHAT’S NEXT</span><span>A new place. A new possibility.</span></div><h2 id="contact-title" data-reveal>LET’S MAKE<br /><span>YOUR PLACE</span><br />IMPOSSIBLE TO MISS.</h2><div className="contact-actions"><a className="contact-email" href={`mailto:${email}`}>{email}<ArrowUpRight size={30} aria-hidden /></a><button className="copy-email" onClick={copyEmail} aria-label={copied ? 'Email copied' : 'Copy email address'}>{copied ? <Check size={20} aria-hidden /> : <Copy size={20} aria-hidden />}</button><span role="status" className="copy-status">{copied ? 'Copied.' : ''}</span></div><p className="contact-note">Tell me about your business and what you have in mind.<br />A short email is a good place to start.</p><ContactForm /></section>
+    </main><footer className="site-footer"><span>Ahad “noawezah” Zaidi<br /><span className="footer-location">Bucharest, Romania</span></span><button className="motion-toggle" onClick={toggleMotion} aria-pressed={reduced} disabled={systemReduced}>{systemReduced ? 'Motion reduced by your device' : reduced ? 'Motion reduced' : 'Reduce motion'}<span className="motion-dot" aria-hidden /></button><a href={contra} target="_blank" rel="noopener noreferrer">Also on Contra <ArrowUpRight size={15} aria-hidden /></a><button className="footer-top" onClick={() => navigate('home')}>Back to top <ArrowUpRight size={15} aria-hidden /></button></footer>
+    <noscript><style>{'.chapter-track{display:block!important;width:100%!important}.home-chapter,.work-chapter{width:100%!important}.chapter-shell{height:auto!important}'}</style><p>Project details: <a href="/work/pebble">Pebble</a> · <a href="/work/urbanist">Urbanist</a>. Email: <a href={`mailto:${email}`}>{email}</a>.</p></noscript>
+  </div>
+  <DialogContent data-reduced={reduced} data-project-scroll onCloseAutoFocus={event => { event.preventDefault(); opener.current?.focus({ preventScroll: true }); }}>
+    <div className="project-dialog-header"><span className="mono">{project.number} / {project.category} / BUCHAREST</span><DialogClose asChild><Button variant="ghost" className="close-project">Close project <X size={24} aria-hidden /></Button></DialogClose></div>
+    <div className="project-body" ref={dialogBody}><div className="project-intro"><div><span className="mono">{project.location}</span><DialogTitle className="project-dialog-title">{project.name}</DialogTitle><DialogDescription className="project-dialog-description">{project.title}<br />{project.subtitle}</DialogDescription></div><div className="project-intro-aside"><span className="mono">WEB DESIGN<br />DEVELOPMENT</span><a href={project.url} target="_blank" rel="noopener noreferrer">Visit live website <ArrowUpRight size={18} aria-hidden /></a><span className="mono project-progress">{project.status}</span></div></div><DeviceScene project={project} reduced={reduced} /><div className="project-story"><p>{project.description}</p><div><span className="mono">THE FOCUS</span><ul>{project.focus.map(item => <li key={item}>{item}</li>)}</ul><Link href={`/work/${project.slug}`}>Open project page <ArrowUpRight size={16} aria-hidden /></Link></div></div></div>
+    <button className="next-project" onClick={nextProject}>Next project / {project.slug === 'pebble' ? 'Urbanist' : 'Pebble'}<ArrowRight size={30} aria-hidden /></button>
+  </DialogContent></Dialog>;
+}

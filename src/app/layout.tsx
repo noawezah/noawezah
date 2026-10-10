@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://noawezah.ro'),
   title: { default: 'noawezah — Local business. Uncommon websites.', template: '%s — noawezah' },
   description: 'Independent web design and development by Ahad Zaidi. Websites with character for cafés, bars, and businesses with a world of their own.',
-  openGraph: { title: 'noawezah — Local business. Uncommon websites.', description: 'Your place has character. Your website should, too.', type: 'website', locale: 'en_GB' },
+  openGraph: { title: 'noawezah — Local business. Uncommon websites.', description: 'Your place has character. Your website could, too.', type: 'website', locale: 'en_GB' },
   robots: { index: true, follow: true },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

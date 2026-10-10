@@ -40,3 +40,14 @@ These measurements are a prior-font baseline, not measurements of the current ty
 ## Typography update
 
 Supplied Neue Machina files and local Satoshi variable font installed. Fixed navigation uses Neue Machina 800; hero and section headings use 800; project titles request 600 and resolve to the nearest supplied 800 cut. Body and captions use Satoshi 400, other navigation and buttons 500. Layout widths checked after replacing the condensed type; production build passed.
+
+## Layout and motion refinement
+
+- Desktop hero tested at nominal 1870×965 and 1280×760: rotated ribbon remains inside the viewport, with the scroll cue above it and a tighter header-to-content gap. Browser dimensions can change with the app pane; measurements use the DOM viewport at each inspection.
+- Chapter background interpolated through rgba(20,22,17,1) before settling at rgb(24,26,19). The fixed menu remained rgb(16,17,15). Ribbon opacity was zero at the settled Work landing; no lime side fragment remained.
+- Work heading measured at top160px through title-only and project reveal states in the compact desktop layout. Rows progressed from opacity0 to Pebble0.7853/Urbanist0, then both1; Back to home remained enabled.
+- Cursor n. is restricted to the Work chapter; the hero mark has its own restrained pointer translation. The native cursor remains.
+- Process pin measurements corrected with priority/sort/refresh. A verified Approach scroll state showed process opacity1, 0.9724, 0.2212 respectively, with progressively offset vertical transforms and a visible low-contrast n. watermark.
+- Keyword backgrounds verified transparent; word colors use olive/green. Copy uses MY INTEREST, Web design & development, could, and the requested MadeBy@noawezah.ro capitalization. AI and other tools are disclosed explicitly.
+- Section index captions, separators, and the Selected work / 02 projects label removed. Mobile headings/menu checked at 390 and 320 widths without horizontal text overflow; tablet headings/menu checked at768.
+- Final reduced-motion check: chapter track display:block/transform:none, cursor display:none, all process rows opacity1/transform:none. Restored full motion for the delivered preview. Final console inspection returned no warnings/errors. Approach copy stays accessible to assistive technology while opacity animates.

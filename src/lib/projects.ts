@@ -1,4 +1,4 @@
-export const email = 'madeby@noawezah.ro';
+export const email = 'MadeBy@noawezah.ro';
 export const contra = 'https://contra.com/ahad_99df5l7h/work?r=ahad_99df5l7h';
 export const projects = [
   {

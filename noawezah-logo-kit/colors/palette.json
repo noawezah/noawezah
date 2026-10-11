@@ -1,0 +1,159 @@
+{
+  "palette": {
+    "ink": {
+      "hex": "#10110F",
+      "rgb": [
+        16,
+        17,
+        15
+      ],
+      "hsl": [
+        90.0,
+        6.2,
+        6.3
+      ],
+      "cmyk_approx": [
+        6,
+        0,
+        12,
+        93
+      ],
+      "role": "Primary dark ground / light-theme lettering"
+    },
+    "chalk": {
+      "hex": "#F4F3E9",
+      "rgb": [
+        244,
+        243,
+        233
+      ],
+      "hsl": [
+        54.5,
+        33.3,
+        93.5
+      ],
+      "cmyk_approx": [
+        0,
+        0,
+        5,
+        4
+      ],
+      "role": "Primary wordmark on dark / warm light ground"
+    },
+    "signal": {
+      "hex": "#DFFF65",
+      "rgb": [
+        223,
+        255,
+        101
+      ],
+      "hsl": [
+        72.5,
+        100.0,
+        69.8
+      ],
+      "cmyk_approx": [
+        13,
+        0,
+        60,
+        0
+      ],
+      "role": "Logo dot / active accents / signal ground"
+    },
+    "white": {
+      "hex": "#FFFFFF",
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "hsl": [
+        0.0,
+        0.0,
+        100.0
+      ],
+      "cmyk_approx": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "role": "White-background export / neutral light ground"
+    },
+    "muted": {
+      "hex": "#A7AA9B",
+      "rgb": [
+        167,
+        170,
+        155
+      ],
+      "hsl": [
+        72.0,
+        8.1,
+        63.7
+      ],
+      "cmyk_approx": [
+        2,
+        0,
+        9,
+        33
+      ],
+      "role": "Secondary text in the dark theme"
+    },
+    "line": {
+      "hex": "#35372E",
+      "rgb": [
+        53,
+        55,
+        46
+      ],
+      "hsl": [
+        73.3,
+        8.9,
+        19.8
+      ],
+      "cmyk_approx": [
+        4,
+        0,
+        16,
+        78
+      ],
+      "role": "Borders and dividers in the dark theme"
+    }
+  },
+  "themes": {
+    "dark": {
+      "background": "#10110F",
+      "wordmark": "#F4F3E9",
+      "dot": "#DFFF65",
+      "text": "#F4F3E9",
+      "secondary": "#A7AA9B",
+      "border": "#35372E"
+    },
+    "white": {
+      "background": "#FFFFFF",
+      "wordmark": "#10110F",
+      "dot": "#DFFF65",
+      "text": "#10110F",
+      "secondary": "#54574C",
+      "border": "#CBCEC0"
+    },
+    "chalk": {
+      "background": "#F4F3E9",
+      "wordmark": "#10110F",
+      "dot": "#DFFF65",
+      "text": "#10110F",
+      "secondary": "#54574C",
+      "border": "#CBCEC0"
+    },
+    "signal": {
+      "background": "#DFFF65",
+      "wordmark": "#10110F",
+      "dot": "#10110F",
+      "text": "#10110F",
+      "secondary": "#4D592E",
+      "border": "#A7BD48"
+    }
+  },
+  "cmyk_note": "Approximate conversion without an ICC profile; proof with your printer."
+}

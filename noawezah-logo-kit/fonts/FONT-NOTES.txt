@@ -1,0 +1,12 @@
+Supplied font files, copied unchanged from the site.
+
+Neue Machina: Pangram Pangram / Mathieu Desjardins.
+Weights supplied: Light 300, Regular 400, Ultrabold 800.
+No Neue Machina license document was present in the source folder.
+Keep use and sharing within the terms of your original font license.
+
+Satoshi: variable WOFF2, used at 400 for body copy and 500 for controls.
+See the supplied Satoshi-FFL.txt for its terms.
+
+The production SVG, PDF and EPS wordmarks are paths and need no font installation.
+Editable text source requires Neue Machina Ultrabold installed.

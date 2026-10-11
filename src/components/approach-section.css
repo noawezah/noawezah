@@ -1,11 +1,20 @@
 .approach.approach-section {
   position:relative;
   isolation:isolate;
-  overflow:hidden;
-  padding-top:clamp(76px,8vw,132px);
-  padding-bottom:clamp(92px,10vw,166px);
+  display:block;
+  overflow:clip;
+  padding-top:clamp(36px,5svh,64px);
+  padding-bottom:clamp(40px,5svh,64px);
   background:var(--chalk);
   color:var(--ink);
+}
+.approach .approach-content {
+  position:relative;
+  z-index:1;
+  min-width:0;
+  width:100%;
+  max-width:1600px;
+  margin-inline:auto;
 }
 
 .approach .approach-layout {
@@ -15,7 +24,7 @@
   grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
   align-items:start;
   gap:6vw;
-  margin:0 0 clamp(76px,8vw,132px);
+  margin:0 0 clamp(32px,4.5svh,56px);
 }
 
 .approach .approach-layout h2 {
@@ -41,7 +50,7 @@
 }
 
 .approach .approach-copy .large-copy {
-  margin-bottom:28px;
+  margin-bottom:22px;
   font-size:clamp(22px,1.95vw,32px);
   line-height:1.45;
   letter-spacing:-.025em;
@@ -56,7 +65,7 @@
 }
 
 .approach .approach-copy .approach-tools {
-  margin-top:26px;
+  margin-top:20px;
 }
 
 .approach .approach-tools mark {
@@ -67,7 +76,7 @@
 
 .approach .approach-copy .signature {
   display:block;
-  margin-top:32px;
+  margin-top:22px;
   font-size:13px;
   font-weight:500;
   color:var(--ink);
@@ -88,14 +97,14 @@
   grid-template-columns:80px 1fr 1fr;
   gap:3vw;
   align-items:start;
-  padding:28px 0;
+  padding:18px 0;
   border:0;
   width:calc(100% - 5vw);
   margin:0;
 }
 
 .approach .process-row + .process-row {
-  margin-top:34px;
+  margin-top:18px;
 }
 
 .approach .process-row:nth-child(2) {
@@ -145,20 +154,28 @@
 
 .approach .approach-watermark {
   position:absolute;
+  inset:0;
   z-index:0;
-  right:-3vw;
-  bottom:-.12em;
+  overflow:clip;
   color:#e3e5d6;
   font-family:var(--font-display),sans-serif;
   font-weight:800;
-  font-size:clamp(380px,58vw,1080px);
+  font-size:clamp(300px,min(74vw,105svh),1160px);
   line-height:.82;
   letter-spacing:-.08em;
   pointer-events:none;
   user-select:none;
 }
 
-.approach .approach-watermark > span {
+.approach .watermark-anchor {
+  position:sticky;
+  top:var(--nav-height);
+  height:0;
+}
+.approach .watermark-anchor > span {
+  position:absolute;
+  top:-.2em;
+  right:-3vw;
   display:block;
   transform:rotate(-10deg);
   transform-origin:65% 65%;
@@ -167,8 +184,8 @@
 @media (max-width:899px) {
   .approach .approach-layout {
     grid-template-columns:1fr;
-    gap:42px;
-    margin-bottom:80px;
+    gap:28px;
+    margin-bottom:40px;
   }
   .approach .approach-layout h2 {
     font-size:clamp(31px,6.3vw,60px);
@@ -198,20 +215,18 @@
     font-size:14px;
   }
   .approach .approach-watermark {
-    font-size:76vw;
-    right:-7vw;
-    bottom:0;
+    font-size:100vw;
   }
 }
 
 @media (max-width:600px) {
   .approach.approach-section {
-    padding-top:72px;
-    padding-bottom:100px;
+    padding-top:32px;
+    padding-bottom:40px;
   }
   .approach .approach-layout {
-    gap:34px;
-    margin-bottom:60px;
+    gap:24px;
+    margin-bottom:32px;
   }
   .approach .approach-layout h2 {
     font-size:7.7vw;
@@ -233,11 +248,11 @@
     grid-template-columns:42px minmax(0,1fr);
     width:100%;
     gap:18px;
-    padding:20px 0;
+    padding:16px 0;
     margin-left:0;
   }
   .approach .process-row + .process-row {
-    margin-top:30px;
+    margin-top:14px;
   }
   .approach .process-row:nth-child(2),
   .approach .process-row:nth-child(3) {
@@ -257,16 +272,14 @@
     line-height:1.7;
   }
   .approach .approach-watermark {
-    right:-15vw;
-    bottom:30px;
-    font-size:118vw;
+    font-size:140vw;
     color:#e6e8db;
   }
+  .approach .watermark-anchor > span { right:-14vw; }
 }
 
 [data-reduced=true] .approach [data-approach-reveal],
-[data-reduced=true] .approach [data-process-step],
-[data-reduced=true] .approach .approach-watermark > span {
+[data-reduced=true] .approach [data-process-step] {
   opacity:1 !important;
   visibility:visible !important;
   transform:none !important;
@@ -274,8 +287,7 @@
 
 @media (prefers-reduced-motion:reduce) {
   .approach [data-approach-reveal],
-  .approach [data-process-step],
-  .approach .approach-watermark > span {
+  .approach [data-process-step] {
     opacity:1 !important;
     visibility:visible !important;
     transform:none !important;

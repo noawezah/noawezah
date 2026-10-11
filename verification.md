@@ -51,3 +51,13 @@ Supplied Neue Machina files and local Satoshi variable font installed. Fixed nav
 - Keyword backgrounds verified transparent; word colors use olive/green. Copy uses MY INTEREST, Web design & development, could, and the requested MadeBy@noawezah.ro capitalization. AI and other tools are disclosed explicitly.
 - Section index captions, separators, and the Selected work / 02 projects label removed. Mobile headings/menu checked at 390 and 320 widths without horizontal text overflow; tablet headings/menu checked at768.
 - Final reduced-motion check: chapter track display:block/transform:none, cursor display:none, all process rows opacity1/transform:none. Restored full motion for the delivered preview. Final console inspection returned no warnings/errors. Approach copy stays accessible to assistive technology while opacity animates.
+
+## Responsive spacing and anchor alignment — 11 October 2026
+
+- Production build and TypeScript passed after the changes; final console inspection returned no warnings/errors.
+- Reviewed nominal 1440×900, 1280×640, 768×1024, 390×844, and 320×780 layouts. Inspected headline, navigation, project-title, and copy widths did not exceed their containers.
+- Approach landed at top85.94 px beneath the 86 px desktop menu; tablet at86.27 px. Contact landed at86.15 px on desktop,75.04 px on the 390 px phone, and74.85 px on the narrow phone, matching the header within subpixel rounding.
+- Work landed on the title-only view with both project rows at opacity0 and Back to home visible. Compact desktop rows expanded to135.98 px each, using the available height rather than leaving a blank block below them. The footer ended near the chapter edge.
+- White watermark anchor stayed at86 px before and after scrolling the section from top85.94 px to-626.06 px; the glyph bounds stayed unchanged. It is clipped to the white section and takes no space in the content layout.
+- Contact footer sizing removed the previous-section strip on tall displays; the enlarged four-line phone headline and distributed content avoid an empty bottom area. AI disclosure now explains faster, efficient delivery.
+- Final reduced-motion smoke check: all process steps opacity1, watermark anchor still native sticky, and full motion restored afterward.

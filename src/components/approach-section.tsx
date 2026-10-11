@@ -24,10 +24,10 @@ const process = [
 export function ApproachSection() {
   return (
     <section id="approach" className="approach approach-section section-pad" aria-labelledby="approach-title">
-      <div className="approach-watermark" aria-hidden="true"><span>n.</span></div>
-
+      <div className="approach-watermark" aria-hidden="true"><div className="watermark-anchor"><span>n.</span></div></div>
+      <div className="approach-content">
       <div className="approach-layout">
-        <h2 id="approach-title" className="approach-reveal" data-approach-reveal>
+        <h2 id="approach-title" tabIndex={-1} className="approach-reveal" data-approach-reveal>
           YOUR BUSINESS.<br /><span>MY INTEREST.</span>
         </h2>
 
@@ -39,7 +39,7 @@ export function ApproachSection() {
             So far, that has meant a café and a bar. The next place might be yours. I’m interested in what makes <mark>your business different,</mark> then turning that into a website that feels right and works well.
           </p>
           <p className="approach-tools approach-reveal" data-approach-reveal>
-            I work with <mark>AI and other tools</mark> throughout the design and development process. I direct the decisions, refine the output, and check the details myself.
+            I use <mark>AI and other tools</mark> to improve my workflow and speed up time-consuming work, so I can <mark>deliver faster</mark> and work more efficiently. I direct the decisions, refine the output, and check the details myself.
           </p>
           <span className="signature approach-reveal" data-approach-reveal>Ahad “noawezah” Zaidi</span>
         </div>
@@ -54,6 +54,7 @@ export function ApproachSection() {
           </li>
         ))}
       </ol>
+      </div>
     </section>
   );
 }

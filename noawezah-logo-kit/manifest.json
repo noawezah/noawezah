@@ -1,0 +1,342 @@
+{
+  "brand": "noawezah.",
+  "font": "Neue Machina Ultrabold",
+  "tracking_em": -0.055,
+  "files": [
+    {
+      "file": "colors/brand-tokens.css",
+      "bytes": 1080,
+      "sha256": "681de4ad1bc80a140cd7dfaefb2d1932953e62670e1bd9313c926336394de87c"
+    },
+    {
+      "file": "colors/noawezah.gpl",
+      "bytes": 157,
+      "sha256": "791a4023af1aa60a887bbc3c4626ba375368c9bfd072e7c386d39093c5a32aa9"
+    },
+    {
+      "file": "colors/palette.json",
+      "bytes": 2866,
+      "sha256": "5e502e44708c823dd1f7151eb1118b82f84e36573da4bd3fa743cef5381ead22"
+    },
+    {
+      "file": "eps/noawezah-for-dark-backgrounds.eps",
+      "bytes": 4124,
+      "sha256": "93cd9f2cf168cf5b68e5c7bc04770fc679e1278d95352930405bdda9323aa3d5"
+    },
+    {
+      "file": "eps/noawezah-for-light-backgrounds.eps",
+      "bytes": 4124,
+      "sha256": "8ab69918ae1f94b23ba3c9b1537832b19ae559387250838edff6b3676f74beff"
+    },
+    {
+      "file": "eps/noawezah-mono-ink.eps",
+      "bytes": 4124,
+      "sha256": "db575b23baeb4feb233b06d051849a486ecb7e8657ee8ec08d6c4f3ebe6691a2"
+    },
+    {
+      "file": "eps/noawezah-mono-white.eps",
+      "bytes": 4124,
+      "sha256": "26f0c072492b58786176ea61d58c1f213d90a28da9eda80d7fec8e5f18df91aa"
+    },
+    {
+      "file": "eps/noawezah-on-ink.eps",
+      "bytes": 4200,
+      "sha256": "c8ad7e39dd18d1cc9e407e58d1baa471a4589bf027d86841cc26775893416f63"
+    },
+    {
+      "file": "eps/noawezah-on-white.eps",
+      "bytes": 4200,
+      "sha256": "4fde870bda2268da1056ceb942c61a19987419bd37f8e281164dca6eb2d48a71"
+    },
+    {
+      "file": "favicons/apple-touch-icon.png",
+      "bytes": 3983,
+      "sha256": "703f4e915b846b810de1350397948eb34215157438fd3b3239499373086ba746"
+    },
+    {
+      "file": "favicons/favicon.ico",
+      "bytes": 16748,
+      "sha256": "9035366014310d9969d06f645e33aff2628d0d66e1d96e53d7cea1ea8e96441c"
+    },
+    {
+      "file": "favicons/favicon.svg",
+      "bytes": 224,
+      "sha256": "f3a3e11bb9be5ff88a94301a07487715703496bc6df331d2cdaee9f86ddcf51b"
+    },
+    {
+      "file": "favicons/icon-192.png",
+      "bytes": 5639,
+      "sha256": "0de1efa1eb5617ae3f67f8a7d57564795a92430fa844e52d5ec41be85f68315b"
+    },
+    {
+      "file": "favicons/icon-512.png",
+      "bytes": 16117,
+      "sha256": "dca4211911dd0f6e9977d3924db865be2efd764a9f81bf05bdc6269e34a831f1"
+    },
+    {
+      "file": "favicons/site.webmanifest",
+      "bytes": 365,
+      "sha256": "5cb67ddb46e5eeacc14f4ab3b830086bf67ffb624100eb6aec3d047266aa96ab"
+    },
+    {
+      "file": "fonts/FONT-NOTES.txt",
+      "bytes": 581,
+      "sha256": "acf4bc7936777db3c411fe529f86005003e67f9f29ac38685ae12dfd72f8ed54"
+    },
+    {
+      "file": "fonts/neue-machina-light.otf",
+      "bytes": 56544,
+      "sha256": "f13fe727ba1347505daabb595851583f635e64625132ac16059fd77325380f88"
+    },
+    {
+      "file": "fonts/neue-machina-regular.otf",
+      "bytes": 59192,
+      "sha256": "e896c98c74d75e98eba142410bc48326672874d6a3766fa7b601359d9f41082a"
+    },
+    {
+      "file": "fonts/neue-machina-ultrabold.otf",
+      "bytes": 58572,
+      "sha256": "f2bf094d99186695565ae5bd017360f6417e35f53ce497451661c8e823a0194c"
+    },
+    {
+      "file": "fonts/Satoshi-FFL.txt",
+      "bytes": 12734,
+      "sha256": "145e7fe2429a3336ba215c070ef722000e01348a3e1baaa127e871bb5012f554"
+    },
+    {
+      "file": "fonts/satoshi-variable.woff2",
+      "bytes": 42588,
+      "sha256": "e739aff9b4d02c264341d6d4872edcda28e79373aeda936f659566a1cd3eb47f"
+    },
+    {
+      "file": "jpg/noawezah-on-ink-2000px.jpg",
+      "bytes": 98908,
+      "sha256": "d017ee68e4c0107a44be43476ff6cd34b5a7ecbdf93892f14f0c5187f6cd5ede"
+    },
+    {
+      "file": "jpg/noawezah-on-white-2000px.jpg",
+      "bytes": 91289,
+      "sha256": "fc50b89ba63feaf644449c62191c2498cddaf1194dab28543e872543d97f8725"
+    },
+    {
+      "file": "logo-preview.png",
+      "bytes": 53312,
+      "sha256": "fe3179bf30b223c7e6462c7e3fa56acfbe1abddf65b75a738db3b5076a26f2e5"
+    },
+    {
+      "file": "pdf/noawezah-brand-guide.pdf",
+      "bytes": 48461,
+      "sha256": "48f7ccbea9b16aadb78fd5b0eddd2b504753dab18eab1bb7309f112a3cae7165"
+    },
+    {
+      "file": "pdf/noawezah-on-ink.pdf",
+      "bytes": 2256,
+      "sha256": "620b742f3591e89c61f14f485f5d825fd9e93056d93f592407fadcee7ad1c08a"
+    },
+    {
+      "file": "pdf/noawezah-on-white.pdf",
+      "bytes": 2239,
+      "sha256": "7b9bb341f28432a397c27e781a6016f0864f013445508fd5d284a36e18397f86"
+    },
+    {
+      "file": "png/noawezah-for-dark-backgrounds-1000px.png",
+      "bytes": 41503,
+      "sha256": "d8a50f42f25df6e29c6674ed0876b229dccfb5db183d09ed7dfe4b14730899cf"
+    },
+    {
+      "file": "png/noawezah-for-dark-backgrounds-2000px.png",
+      "bytes": 85106,
+      "sha256": "46c233981030a3bf80486d44e9c94fd3045019f80cc821d1c29771684b39965a"
+    },
+    {
+      "file": "png/noawezah-for-dark-backgrounds-4000px.png",
+      "bytes": 54073,
+      "sha256": "4d5be4a05e697763a88c029e16e65960255f25883d844ac697b2d08db7e73914"
+    },
+    {
+      "file": "png/noawezah-for-light-backgrounds-1000px.png",
+      "bytes": 30617,
+      "sha256": "0609dedc78f3def95d18fd397e2d25add057e50f852d559ab76b669ca7a9523d"
+    },
+    {
+      "file": "png/noawezah-for-light-backgrounds-2000px.png",
+      "bytes": 64352,
+      "sha256": "c99517be13344a65c24febc0b330820891c12d8b7519aa2834903fb6253135cb"
+    },
+    {
+      "file": "png/noawezah-for-light-backgrounds-4000px.png",
+      "bytes": 54073,
+      "sha256": "8146ab1f098da79bfe27cd23206177b4c234700352957f515defd8fc63ac7795"
+    },
+    {
+      "file": "png/noawezah-mono-ink-1000px.png",
+      "bytes": 30019,
+      "sha256": "0b1a8211382fc37a58d8e7b6001fe5f52b12dcdc3ddb410ea66e75c87dcad5a1"
+    },
+    {
+      "file": "png/noawezah-mono-ink-2000px.png",
+      "bytes": 63063,
+      "sha256": "ef06983794faad5568bce280eaf19e81841678fa45bfb29ba2733602b0124b49"
+    },
+    {
+      "file": "png/noawezah-mono-ink-4000px.png",
+      "bytes": 54005,
+      "sha256": "4d819e77438ccc9edc8e73237124c433bf8e0c2f4d7fd0b050e4811a1f5acc23"
+    },
+    {
+      "file": "png/noawezah-mono-white-1000px.png",
+      "bytes": 23946,
+      "sha256": "ac9452572e65f4e91f710b11e7a0c5071e9ee638c943f85e911bf82bd6a13cf4"
+    },
+    {
+      "file": "png/noawezah-mono-white-2000px.png",
+      "bytes": 50564,
+      "sha256": "b360984b292069442e6be3a8cd1a2f2d033cab24fb7e76913231dd10803057f5"
+    },
+    {
+      "file": "png/noawezah-mono-white-4000px.png",
+      "bytes": 54002,
+      "sha256": "f0cd5d57b1edf914590a4df05af399129f65ebdccadda90e7bd5ceadf088f6a5"
+    },
+    {
+      "file": "png/noawezah-on-ink-1000px.png",
+      "bytes": 43377,
+      "sha256": "94385dd97fc1762ba6bfa57d753afbca3fd54d5bdb8e3c1e266e56989d1adcde"
+    },
+    {
+      "file": "png/noawezah-on-ink-2000px.png",
+      "bytes": 89993,
+      "sha256": "26f237b173acfe0d62e621871ce07be202c142af26235239713ebc56a75424c3"
+    },
+    {
+      "file": "png/noawezah-on-ink-4000px.png",
+      "bytes": 70613,
+      "sha256": "3ccca1f9c5dbd41ca99b5602b2e549f3cf21f14b682a37101f7cd30193ecb13b"
+    },
+    {
+      "file": "png/noawezah-on-white-1000px.png",
+      "bytes": 37856,
+      "sha256": "64279c38226033761005feeb5ca21765b492aa285b6385d4c68cdc812c00c532"
+    },
+    {
+      "file": "png/noawezah-on-white-2000px.png",
+      "bytes": 77642,
+      "sha256": "da2c7bb817e5e0d44c868a50a0658f53b462e7cfcef2bced3c1b642f5c44b8c6"
+    },
+    {
+      "file": "png/noawezah-on-white-4000px.png",
+      "bytes": 69776,
+      "sha256": "c60373c2e4d7cbdfb5d90e4bbf93e52ebc8076de3df15ef56185b85ff2cfd32e"
+    },
+    {
+      "file": "README.md",
+      "bytes": 3350,
+      "sha256": "d7049f722eab6403b258ffa94df492596a2454320da24f60c2cf56c614d9e321"
+    },
+    {
+      "file": "source/logo-geometry.json",
+      "bytes": 7638,
+      "sha256": "7075bc7a27b922497400f9518438fe71d8201a9c45f6973d6bc4869f262b0b92"
+    },
+    {
+      "file": "source/noawezah-editable-text.svg",
+      "bytes": 554,
+      "sha256": "e80db29c6637fe4cea2e13ebcb47c373d58e65616bf3db10c78fed4d3e3a75b7"
+    },
+    {
+      "file": "source/original-reference.png",
+      "bytes": 4632,
+      "sha256": "1380e7302181547c0abe48069821169747fa96ac26917af3493f937e7f0f542f"
+    },
+    {
+      "file": "svg/noawezah-for-dark-backgrounds.svg",
+      "bytes": 2518,
+      "sha256": "9aba83320073432153f9b4f6430f0f6ef71a96e00d6a2384dc4178309ab67790"
+    },
+    {
+      "file": "svg/noawezah-for-light-backgrounds.svg",
+      "bytes": 2519,
+      "sha256": "ed1dc6fdbede47df4abb6bcf9445edd442665e6a6af924bf6be0a28ebbcf5e89"
+    },
+    {
+      "file": "svg/noawezah-mono-ink.svg",
+      "bytes": 2506,
+      "sha256": "1bad720f44e643c7f266c2f94bbcf7968d22a42429042a0a1f998ec6e6c4b8ed"
+    },
+    {
+      "file": "svg/noawezah-mono-white.svg",
+      "bytes": 2508,
+      "sha256": "c6f5d047ccbdb105a9e1574dd9594bfc0171179587c72793d693346d7ad487b5"
+    },
+    {
+      "file": "svg/noawezah-on-ink.svg",
+      "bytes": 2555,
+      "sha256": "b1d145f105f7855d01aa538eb3be0c9aae37be5625ecdf342815e392d71b3df6"
+    },
+    {
+      "file": "svg/noawezah-on-white.svg",
+      "bytes": 2557,
+      "sha256": "9e95b064bcf5752541be24fa96dcd123b7b872baf2228b8b36f4f0fbbf75e25f"
+    },
+    {
+      "file": "webp/noawezah-for-dark-backgrounds-1000px.webp",
+      "bytes": 20260,
+      "sha256": "ca7260b0da860b125b8d122220555a909865f48a12d7d8420da7d46e6aa5b479"
+    },
+    {
+      "file": "webp/noawezah-for-dark-backgrounds-2000px.webp",
+      "bytes": 39106,
+      "sha256": "5e526feebda5b9757cb6be89d381cfba91769eac3d96879737cb57d88e226792"
+    },
+    {
+      "file": "webp/noawezah-for-light-backgrounds-1000px.webp",
+      "bytes": 14724,
+      "sha256": "ae3a35f708aa5d3c1a923d93b04b525014feb8fd8596aea71048265eab5199e5"
+    },
+    {
+      "file": "webp/noawezah-for-light-backgrounds-2000px.webp",
+      "bytes": 28744,
+      "sha256": "18fd9366b4c18153cee8b9fbaa7ed22c84629c718f1aa9ce3507cb6ed4cec39f"
+    },
+    {
+      "file": "webp/noawezah-mono-ink-1000px.webp",
+      "bytes": 14196,
+      "sha256": "c4b18ac7599c76d6620c2fb6b98154466f0e0ac6126241da953b611909f61029"
+    },
+    {
+      "file": "webp/noawezah-mono-ink-2000px.webp",
+      "bytes": 27950,
+      "sha256": "d404debf3eabeb42d098368f9941ab3c7e0c8958f405397032e3d92a08c89336"
+    },
+    {
+      "file": "webp/noawezah-mono-white-1000px.webp",
+      "bytes": 12002,
+      "sha256": "98da571f8e67727a189bbee0f70b03093adb68d2bf37ecbc5a79ccf80d9cad30"
+    },
+    {
+      "file": "webp/noawezah-mono-white-2000px.webp",
+      "bytes": 23760,
+      "sha256": "ff5efa2f97ad23e67b6844fccbcc864b044837afb0b6c3931a3a760f089550b3"
+    },
+    {
+      "file": "webp/noawezah-on-ink-1000px.webp",
+      "bytes": 19792,
+      "sha256": "30257850db297e4abf9011a717e98821ada888ee94e73e8ff8802a4921bc5a47"
+    },
+    {
+      "file": "webp/noawezah-on-ink-2000px.webp",
+      "bytes": 38302,
+      "sha256": "ad4f88f227ac3d4df6b2cb7ea23350c7e9f8938b4b912c60f17f4188ba01960f"
+    },
+    {
+      "file": "webp/noawezah-on-white-1000px.webp",
+      "bytes": 15894,
+      "sha256": "a98d90c3ed04965a2e45afc8d62e09796303b87e23dfeca6af2ba825372e1c84"
+    },
+    {
+      "file": "webp/noawezah-on-white-2000px.webp",
+      "bytes": 30802,
+      "sha256": "8c321cdf4840af8b1ec616c8b3cc41fff1f8b5bc42437724d42dfd54558f30ac"
+    }
+  ]
+}

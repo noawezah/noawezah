@@ -1,0 +1,45 @@
+/* Brand palette from the supplied logo and current site. */
+:root {
+  --noawezah-ink: #10110F;
+  --noawezah-chalk: #F4F3E9;
+  --noawezah-signal: #DFFF65;
+  --noawezah-white: #FFFFFF;
+  --noawezah-muted: #A7AA9B;
+  --noawezah-line: #35372E;
+}
+
+[data-brand-theme="dark"] {
+  --brand-background: #10110F;
+  --brand-wordmark: #F4F3E9;
+  --brand-dot: #DFFF65;
+  --brand-text: #F4F3E9;
+  --brand-secondary: #A7AA9B;
+  --brand-border: #35372E;
+}
+
+[data-brand-theme="white"] {
+  --brand-background: #FFFFFF;
+  --brand-wordmark: #10110F;
+  --brand-dot: #DFFF65;
+  --brand-text: #10110F;
+  --brand-secondary: #54574C;
+  --brand-border: #CBCEC0;
+}
+
+[data-brand-theme="chalk"] {
+  --brand-background: #F4F3E9;
+  --brand-wordmark: #10110F;
+  --brand-dot: #DFFF65;
+  --brand-text: #10110F;
+  --brand-secondary: #54574C;
+  --brand-border: #CBCEC0;
+}
+
+[data-brand-theme="signal"] {
+  --brand-background: #DFFF65;
+  --brand-wordmark: #10110F;
+  --brand-dot: #10110F;
+  --brand-text: #10110F;
+  --brand-secondary: #4D592E;
+  --brand-border: #A7BD48;
+}

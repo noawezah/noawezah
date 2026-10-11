@@ -29,7 +29,7 @@ Selected by Ahad on 10 October 2026 after the three-direction board and interact
 | Next project / overlay | Next project button | Current copy and scene masked out → next project revealed | 250 ms out / 400 ms in, shared ease | Cancel old timelines on close or another selection; active project is the only source of truth | Same button action; instantaneous reduced motion |
 | Approach text | Each heading/copy chunk enters at top 86% | Invisible, y=28 → visible, y=0; emphasis changes word color only | 850 ms power3.out | Reverse on leaving upward; no container movement | Readable without JS; immediate reduced motion |
 | Process / white Approach | Three independent steps enter top 94% → top 58% | Invisible and y=72/84/96 → visible and y=0 | Native scroll scrub 0.55, linear | Fully reversible; geometry refreshed on resize | Vertical entry on mobile; immediate reduced motion |
-| White Approach watermark | Scroll across Approach | Huge low-contrast Neue Machina n. moves yPercent 9 → -9 | Scrub 0.8, linear | Reverses on upward scroll | Same restrained scroll on touch; static reduced motion |
+| White Approach watermark | White section enters and leaves the viewport | Huge low-contrast Neue Machina n. stays fixed beneath the menu; clipped to the white section | Native CSS sticky anchor, no timeline or layout footprint | Identical position on forward/back scroll; bounds follow the section and viewport | Same native positioning on mobile and reduced motion |
 | Hero n. pointer response | Fine mouse moves inside home; inner n. element | Rest → up to ±14 px horizontal / ±10 px vertical translation | CSS 650 ms shared ease | Pointer leave recenters; outer element retains scroll choreography | No mouse response on touch/reduced motion |
 | Selected Work cursor signature | Fine mouse inside Work only | Hidden → small lime n. offset 20 px from native cursor | One RAF per frame, 180 ms CSS follow | Hidden on section leave, scroll, keyboard, blur, or open dialog; all listeners cleaned up | Absent on touch/reduced motion |
 | Contact reveal | Section enters viewport | Small y offset → settled content | 500 ms power3.out; run once | Remains visible on reverse scroll | Readable without JS; immediate reduced motion |
@@ -49,3 +49,11 @@ Production build and TypeScript check; desktop/tablet/mobile review; forward/bac
 ## Approach content refinement
 
 Heading: YOUR BUSINESS. MY INTEREST. The copy explicitly describes AI and other tools as part of design and development, with Ahad directing decisions, refining output, and checking the details. Keyword emphasis uses foreground olive/green on chalk, never a highlight background.
+
+## Responsive spacing and navigation — 11 October 2026
+
+Work rows share the available viewport height; its footer remains close to the next section after the pin releases. Section padding uses bounded viewport sizing, with 32 px on phones and 36–72 px on larger displays. Approach copy/process gaps and bottom padding are reduced. Project scenes are capped at 1600 px on wide screens.
+
+Menu links measure the current header height (86 px desktop / 75 px phone) and align section backgrounds directly beneath it. Work still targets the title-only landing at progress 0.565; projects remain hidden until further scroll. Contact reserves the remaining viewport height using a measured footer height so its anchor can align even near the end of the page. Its content is distributed through that space, and the phone headline uses four larger lines.
+
+AI copy explains that AI and other tools improve the workflow, accelerate time-consuming work, and support faster, efficient delivery, with Ahad directing and checking the result.

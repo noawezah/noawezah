@@ -31,7 +31,12 @@ export function Portfolio() {
     update();
     try { setManualReduced(localStorage.getItem('noawezah-motion') === 'reduce'); } catch {}
     preference.addEventListener('change', update);
-    return () => { preference.removeEventListener('change', update); if (pendingFocus.current) window.removeEventListener('scrollend', pendingFocus.current); };
+    const footer = root.current?.querySelector<HTMLElement>('.site-footer');
+    const measureFooter = () => { if (footer) root.current?.style.setProperty('--footer-height', footer.getBoundingClientRect().height + 'px'); };
+    const footerObserver = new ResizeObserver(measureFooter);
+    if (footer) footerObserver.observe(footer);
+    measureFooter();
+    return () => { preference.removeEventListener('change', update); footerObserver.disconnect(); if (pendingFocus.current) window.removeEventListener('scrollend', pendingFocus.current); };
   }, []);
   useEffect(() => {
     const node = root.current;
@@ -55,7 +60,6 @@ export function Portfolio() {
           gsap.utils.toArray<HTMLElement>('[data-process-step]').forEach((el, index) => {
             gsap.fromTo(el, { opacity: 0, y: 72 + index * 12 }, { opacity: 1, y: 0, ease: 'none', scrollTrigger: { trigger: el, start: 'top 94%', end: 'top 58%', scrub: .55 } });
           });
-          gsap.fromTo('.approach-watermark span', { yPercent: 9 }, { yPercent: -9, ease: 'none', scrollTrigger: { trigger: '#approach', start: 'top bottom', end: 'bottom top', scrub: .8 } });
         }
       }, node);
       const media = gsap.matchMedia();
@@ -99,7 +103,7 @@ export function Portfolio() {
           showCue(progress >= .56 && progress < .84 && (this.scrollTrigger?.progress || 0) >= .56);
           rows.forEach((row, index) => { row.disabled = progress <= .62 + index * .08; });
         }, scrollTrigger: {
-          trigger: '.chapter-shell', start: 'top top+=86', end: () => '+=' + window.innerHeight * 2.3, pin: true, scrub: .7, invalidateOnRefresh: true, refreshPriority: 1,
+          trigger: '.chapter-shell', start: () => 'top top+=' + (node.querySelector('.site-nav')?.getBoundingClientRect().height || 86), end: () => '+=' + window.innerHeight * 2.3, pin: true, scrub: .7, invalidateOnRefresh: true, refreshPriority: 1,
           onRefresh: self => { workScroll.current = self.start + (self.end - self.start) * .565; },
           onUpdate: self => {
             if (self.progress < .56) hideBack();
@@ -136,16 +140,22 @@ export function Portfolio() {
     if (!open) { nextAnimation.current?.kill(); if (dialogBody.current) dialogBody.current.style.clipPath = ''; }
     return () => { nextAnimation.current?.kill(); };
   }, [open]);
-  function navigate(destination: 'home' | 'work') {
+  function navigate(destination: 'home' | 'work' | 'approach' | 'contact') {
     if (pendingFocus.current) { window.removeEventListener('scrollend', pendingFocus.current); pendingFocus.current = null; }
     const node = document.getElementById(destination);
     const navHeight = root.current?.querySelector('.site-nav')?.getBoundingClientRect().height || 86;
-    const top = destination === 'home' ? 0 : workScroll.current || (node?.getBoundingClientRect().top || 0) + window.scrollY - navHeight;
+    const top = destination === 'home' ? 0 : destination === 'work' && workScroll.current ? workScroll.current : (node?.getBoundingClientRect().top || 0) + window.scrollY - navHeight;
     window.scrollTo({ top, behavior: reduced ? 'instant' : 'smooth' });
-    if (destination === 'work') {
-      const focus = () => { pendingFocus.current = null; const heading = document.getElementById('work-title'); const bounds = heading?.getBoundingClientRect(); if (bounds && bounds.top >= 0 && bounds.top < window.innerHeight && Math.abs(bounds.left - window.innerWidth * .04) < 80) heading?.focus({ preventScroll: true }); };
+    if (destination !== 'home') {
+      const focus = () => { pendingFocus.current = null; const heading = document.getElementById(destination + '-title'); const bounds = heading?.getBoundingClientRect(); if (bounds && bounds.top >= navHeight && bounds.top < window.innerHeight && (destination !== 'work' || Math.abs(bounds.left - window.innerWidth * .04) < 80)) heading?.focus({ preventScroll: true }); };
       if (reduced || Math.abs(window.scrollY - top) < 1) focus(); else { pendingFocus.current = focus; window.addEventListener('scrollend', focus, { once: true }); }
     }
+  }
+  function navigateSection(event: React.MouseEvent<HTMLAnchorElement>, destination: 'approach' | 'contact') {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    window.history.replaceState(null, '', '#' + destination);
+    navigate(destination);
   }
   function openProject(selected: Project, button: HTMLButtonElement) {
     nextAnimation.current?.kill();
@@ -191,15 +201,15 @@ export function Portfolio() {
   }
   return <Dialog open={open} onOpenChange={setOpen}><div ref={root} className="portfolio" data-reduced={reduced}>
     <Vitals /><CursorSignature disabled={reduced || open} /><a href="#main" className="skip-link">Skip to content</a>
-    <header className="site-nav"><button className="wordmark" onClick={() => navigate('home')} aria-label="Noawezah home">noawezah<span>.</span></button><span className="nav-meta">Independent web design<br />Ahad Zaidi / Bucharest</span><nav aria-label="Main navigation"><button onClick={() => navigate('work')}>Work <ArrowUpRight size={15} aria-hidden /></button><a href="#approach">Approach</a><a href="#contact" className="nav-contact">Let’s talk <ArrowUpRight size={16} aria-hidden /></a></nav></header>
+    <header className="site-nav"><button className="wordmark" onClick={() => navigate('home')} aria-label="Noawezah home">noawezah<span>.</span></button><span className="nav-meta">Independent web design<br />Ahad Zaidi / Bucharest</span><nav aria-label="Main navigation"><button onClick={() => navigate('work')}>Work <ArrowUpRight size={15} aria-hidden /></button><a href="#approach" onClick={event => navigateSection(event, 'approach')}>Approach</a><a href="#contact" className="nav-contact" onClick={event => navigateSection(event, 'contact')}>Let’s talk <ArrowUpRight size={16} aria-hidden /></a></nav></header>
     <main id="main">
       <div className="chapter-shell" id="home"><div className="chapter-track">
         <section className="home-chapter" aria-labelledby="home-title" onPointerMove={moveHero} onPointerLeave={event => { event.currentTarget.style.setProperty('--mark-x', '0px'); event.currentTarget.style.setProperty('--mark-y', '0px'); }}><div className="chapter-meta"><span>Small businesses. Strong identities.</span><span>Web design &amp; development</span></div><h1 id="home-title" aria-label="Local business. Uncommon websites."><span className="headline-mask"><span className="headline-line">LOCAL BUSINESS.</span></span><span className="headline-mask"><span className="headline-line accent">UNCOMMON</span></span><span className="headline-mask"><span className="headline-line">WEBSITES.</span></span></h1><div className="home-bottom"><p>Your place has character.<br />Your website could, too.</p><button className="work-cta" onClick={() => navigate('work')}>Explore selected work <span><ArrowUpRight size={28} aria-hidden /></span></button></div><div className="signal-ribbon" aria-hidden><span>REAL PLACES.</span><span>DIGITAL PRESENCE.</span><span>REAL PLACES.</span></div><span className="ghost-mark" aria-hidden><span>n.</span></span><span className="scroll-cue mono">Scroll to meet the work <ArrowRight size={15} aria-hidden /></span></section>
-        <section className="work-chapter" id="work" aria-labelledby="work-title"><div className="chapter-meta"><button onClick={() => navigate('home')} className="back-home"><ArrowLeft size={16} aria-hidden /> Back to home</button></div><h2 id="work-title" tabIndex={-1}>BUILT FOR<br /><span className="accent">THEIR WORLD.</span></h2><div className="project-index">{projects.map(p => <button key={p.slug} className="project-row" onClick={event => openProject(p, event.currentTarget)} onPointerMove={moveRow} onPointerLeave={event => { delete event.currentTarget.dataset.pointer; event.currentTarget.style.setProperty('--hover-x', '0px'); }} aria-label={`Explore ${p.name} project`}><span className="project-number mono">{p.number} / {p.category}</span><span className="project-name">{p.name}</span><span className="project-thumb"><Image src={p.venue} alt="" fill sizes="160px" /></span><span className="project-action">Explore <ArrowUpRight size={24} aria-hidden /></span><span className="cursor-tether" aria-hidden /><span className="cursor-cross" aria-hidden /></button>)}</div><span className="work-scroll-cue mono">Continue scrolling to reveal the projects <ArrowRight size={15} aria-hidden /></span><div className="work-bottom"><span>Websites that feel like the places behind them.</span><a href="#contact">Have a place in mind? <ArrowUpRight size={16} aria-hidden /></a></div></section>
+        <section className="work-chapter" id="work" aria-labelledby="work-title"><div className="chapter-meta"><button onClick={() => navigate('home')} className="back-home"><ArrowLeft size={16} aria-hidden /> Back to home</button></div><h2 id="work-title" tabIndex={-1}>BUILT FOR<br /><span className="accent">THEIR WORLD.</span></h2><div className="project-index">{projects.map(p => <button key={p.slug} className="project-row" onClick={event => openProject(p, event.currentTarget)} onPointerMove={moveRow} onPointerLeave={event => { delete event.currentTarget.dataset.pointer; event.currentTarget.style.setProperty('--hover-x', '0px'); }} aria-label={`Explore ${p.name} project`}><span className="project-number mono">{p.number} / {p.category}</span><span className="project-name">{p.name}</span><span className="project-thumb"><Image src={p.venue} alt="" fill sizes="160px" /></span><span className="project-action">Explore <ArrowUpRight size={24} aria-hidden /></span><span className="cursor-tether" aria-hidden /><span className="cursor-cross" aria-hidden /></button>)}</div><span className="work-scroll-cue mono">Continue scrolling to reveal the projects <ArrowRight size={15} aria-hidden /></span><div className="work-bottom"><span>Websites that feel like the places behind them.</span><a href="#contact" onClick={event => navigateSection(event, 'contact')}>Have a place in mind? <ArrowUpRight size={16} aria-hidden /></a></div></section>
       </div></div>
       <section className="in-context section-pad" aria-labelledby="context-title"><div className="context-heading" data-reveal><h2 id="context-title">THE PLACE.<br /><span className="accent">THE PRESENCE.</span></h2><p>A website is another way<br />to step inside your business.<br />It could feel like it belongs.</p></div>{projects.map(p => <article className="project-feature" key={p.slug}><div className="feature-heading"><div><span className="mono">{p.number} / {p.category} / BUCHAREST</span><h3>{p.name}</h3></div><span className={`project-status ${p.slug === 'pebble' ? 'status-progress' : ''}`}>{p.status}</span></div><div className="scene-open"><DeviceScene project={p} reduced={reduced} /><button className="scene-open-label" onClick={event => openProject(p, event.currentTarget)} aria-label={`Explore ${p.name} project`}>Explore project <ArrowUpRight size={18} aria-hidden /></button></div><div className="feature-description"><p>{p.title}<br /><span>{p.subtitle}</span></p><Link href={`/work/${p.slug}`}>Project details <ArrowUpRight size={18} aria-hidden /></Link></div></article>)}</section>
       <ApproachSection />
-      <section id="contact" className="contact section-pad" aria-labelledby="contact-title"><h2 id="contact-title" data-reveal>LET’S MAKE<br /><span>YOUR PLACE</span><br />IMPOSSIBLE TO MISS.</h2><div className="contact-actions"><a className="contact-email" href={`mailto:${email}`}>{email}<ArrowUpRight size={30} aria-hidden /></a><button className="copy-email" onClick={copyEmail} aria-label={copied ? 'Email copied' : 'Copy email address'}>{copied ? <Check size={20} aria-hidden /> : <Copy size={20} aria-hidden />}</button><span role="status" className="copy-status">{copied ? 'Copied.' : ''}</span></div><p className="contact-note">Tell me about your business and what you have in mind.<br />A short email is a good place to start.</p><ContactForm /></section>
+      <section id="contact" className="contact section-pad" aria-labelledby="contact-title"><h2 id="contact-title" tabIndex={-1} data-reveal>LET’S MAKE<br /><span>YOUR PLACE</span><br />IMPOSSIBLE<span className="contact-last-line"> TO MISS.</span></h2><div className="contact-actions"><a className="contact-email" href={`mailto:${email}`}>{email}<ArrowUpRight size={30} aria-hidden /></a><button className="copy-email" onClick={copyEmail} aria-label={copied ? 'Email copied' : 'Copy email address'}>{copied ? <Check size={20} aria-hidden /> : <Copy size={20} aria-hidden />}</button><span role="status" className="copy-status">{copied ? 'Copied.' : ''}</span></div><p className="contact-note">Tell me about your business and what you have in mind.<br />A short email is a good place to start.</p><ContactForm /></section>
     </main><footer className="site-footer"><span>Ahad “noawezah” Zaidi<br /><span className="footer-location">Bucharest, Romania</span></span><button className="motion-toggle" onClick={toggleMotion} aria-pressed={reduced} disabled={systemReduced}>{systemReduced ? 'Motion reduced by your device' : reduced ? 'Motion reduced' : 'Reduce motion'}<span className="motion-dot" aria-hidden /></button><a href={contra} target="_blank" rel="noopener noreferrer">Also on Contra <ArrowUpRight size={15} aria-hidden /></a><button className="footer-top" onClick={() => navigate('home')}>Back to top <ArrowUpRight size={15} aria-hidden /></button></footer>
     <noscript><style>{'.chapter-track{display:block!important;width:100%!important}.home-chapter,.work-chapter{width:100%!important}.chapter-shell{height:auto!important}'}</style><p>Project details: <a href="/work/pebble">Pebble</a> · <a href="/work/urbanist">Urbanist</a>. Email: <a href={`mailto:${email}`}>{email}</a>.</p></noscript>
   </div>

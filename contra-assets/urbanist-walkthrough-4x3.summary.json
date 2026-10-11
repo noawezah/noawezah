@@ -1,0 +1,52 @@
+{
+  "slug": "urbanist",
+  "manifestPath": "C:\\Users\\HP\\Documents\\ChatGPT\\Portfolio\\contra-assets\\_video-work\\urbanist-manifest.json",
+  "rawPath": "C:\\Users\\HP\\Documents\\ChatGPT\\Portfolio\\contra-assets\\_video-work\\urbanist\\page@879c39b60e448ee0ff477df6dabcc8e4.webm",
+  "outputPath": "C:\\Users\\HP\\Documents\\ChatGPT\\Portfolio\\contra-assets\\urbanist-walkthrough-4x3.mp4",
+  "duration": 22.36,
+  "expectedDuration": 22.506999999999994,
+  "fileBytes": 9475970,
+  "width": 1600,
+  "height": 1200,
+  "aspectRatio": "4:3",
+  "fps": 25,
+  "codec": "H264",
+  "crossfadeSeconds": 0.35,
+  "clips": [
+    {
+      "start": 8.971,
+      "duration": 5.295,
+      "label": "Identity, menu invitation, and sound"
+    },
+    {
+      "start": 15.657,
+      "duration": 4.189,
+      "label": "Culture and motion"
+    },
+    {
+      "start": 21.204,
+      "duration": 2.9349999999999987,
+      "label": "Community and reviews"
+    },
+    {
+      "start": 25.509,
+      "duration": 2.062999999999999,
+      "label": "The place"
+    },
+    {
+      "start": 30.161,
+      "duration": 3.5489999999999995,
+      "label": "Menu concept and food"
+    },
+    {
+      "start": 36.452,
+      "duration": 2.8840000000000003,
+      "label": "Coffee category navigation"
+    },
+    {
+      "start": 44.114,
+      "duration": 3.692,
+      "label": "Bar selection and item detail"
+    }
+  ]
+}

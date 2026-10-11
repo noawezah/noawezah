@@ -13,7 +13,19 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://noawezah.ro'),
   title: { default: 'noawezah — Local business. Uncommon websites.', template: '%s — noawezah' },
   description: 'Independent web design and development by Ahad Zaidi. Websites with character for cafés, bars, and businesses with a world of their own.',
-  openGraph: { title: 'noawezah — Local business. Uncommon websites.', description: 'Your place has character. Your website could, too.', type: 'website', locale: 'en_GB' },
+  openGraph: {
+    title: 'noawezah — Local business. Uncommon websites.',
+    description: 'Your place has character. Your website could, too.',
+    type: 'website', locale: 'en_GB', siteName: 'noawezah.',
+    images: [{ url: '/images/noawezah-social-v1.png', width: 1200, height: 630, type: 'image/png', alt: 'noawezah. — full logo' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'noawezah — Local business. Uncommon websites.',
+    description: 'Your place has character. Your website could, too.',
+    images: [{ url: '/images/noawezah-social-v1.png', alt: 'noawezah. — full logo' }],
+  },
+  manifest: '/site.webmanifest',
   robots: { index: true, follow: true },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

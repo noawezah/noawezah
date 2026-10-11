@@ -1,0 +1,37 @@
+{
+  "slug": "pebble",
+  "manifestPath": "C:\\Users\\HP\\Documents\\ChatGPT\\Portfolio\\contra-assets\\_video-work\\pebble-manifest.json",
+  "rawPath": "C:\\Users\\HP\\Documents\\ChatGPT\\Portfolio\\contra-assets\\_video-work\\pebble\\page@6069ea79a8dc317cea2318bc8480992e.webm",
+  "outputPath": "C:\\Users\\HP\\Documents\\ChatGPT\\Portfolio\\contra-assets\\pebble-walkthrough-4x3.mp4",
+  "duration": 25.6,
+  "expectedDuration": 25.546999999999997,
+  "fileBytes": 19204631,
+  "width": 1600,
+  "height": 1200,
+  "aspectRatio": "4:3",
+  "fps": 25,
+  "codec": "H264",
+  "crossfadeSeconds": 0.35,
+  "clips": [
+    {
+      "start": 8.785,
+      "duration": 5.846,
+      "label": "Welcome and café atmosphere"
+    },
+    {
+      "start": 16.151,
+      "duration": 6.536000000000001,
+      "label": "The space"
+    },
+    {
+      "start": 24.109,
+      "duration": 7.030999999999999,
+      "label": "Coffee and details"
+    },
+    {
+      "start": 32.497,
+      "duration": 7.1839999999999975,
+      "label": "Reviews, location, and footer"
+    }
+  ]
+}

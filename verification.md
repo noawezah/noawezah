@@ -61,3 +61,10 @@ Supplied Neue Machina files and local Satoshi variable font installed. Fixed nav
 - White watermark anchor stayed at86 px before and after scrolling the section from top85.94 px to-626.06 px; the glyph bounds stayed unchanged. It is clipped to the white section and takes no space in the content layout.
 - Contact footer sizing removed the previous-section strip on tall displays; the enlarged four-line phone headline and distributed content avoid an empty bottom area. AI disclosure now explains faster, efficient delivery.
 - Final reduced-motion smoke check: all process steps opacity1, watermark anchor still native sticky, and full motion restored afterward.
+
+## Brand icon and social preview — 11 October 2026
+
+- Generated the n. monogram from the supplied vector glyph outlines; the package's older generic n-only favicon was not reused. Inspected the 512 px icon and the full-wordmark 1200×630 social card visually.
+- Production build passed. Crawled /, /work/pebble and /work/urbanist with facebookexternalhit/1.1: each returned200, the full brand OG/Twitter image URL, dimensions1200×630, large-image card metadata, and the expected SVG/ICO/Apple icon links. No Pebble placeholder appeared in sharing metadata.
+- SVG, ICO, Apple PNG, social PNG, manifest, and 192/512 icons all returned200 with matching MIME types. Social card is19,806bytes.
+- Verified locally; no public deployment or messages to social platforms were sent in this update.

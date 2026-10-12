@@ -1,5 +1,16 @@
 # Verification — 10 October 2026
 
+## Supplied 3D device template — 12 October 2026
+
+- Production build and its TypeScript validation passed after the final placement changes. The temporary model-check route and its fixtures were removed before the build.
+- Supplied FBX sources were prepared as reusable GLBs: laptop 12,189,568 bytes, phone 1,111,196 bytes. Phone geometry retains one complete handset (69,617 triangles, 14 material batches). Laptop body, keyboard, lid, and display geometry remain intact; only excessive speaker grille microdetail is simplified (1,306,783 final triangles, 28 material batches).
+- Independent asset round trips verified the screen names, screen UVs, geometry bounds, and compressed decoding. Laptop screen UVs were restored after optimization, and its display glass was made clearer. Both websites were visually confirmed on the supplied models in the browser.
+- The Urbanist HEIC was converted through the installed image converter. The web photo is 2400×2057, cropped only at the left edge with mild brightness/saturation adjustment. No upscaling or perspective warp was used. The confirmed large foreground ashtray guides laptop placement; photo-anchored scenes disable device scroll and pointer movement.
+- Checked effective browser viewports of 1200×750, 390×844, and 320×780. The laptop/phone slot gaps were about 59 px, 19 px, and 15 px respectively; both models reached ready state and inspected mobile layouts had no horizontal overflow. Loading/fallback base clearance was also checked on mobile.
+- Portfolio scenes retained 16:10 on desktop; the shareable project scene retained 16:9. Mobile portfolio, shareable route, and project dialog retained 1:1.05. Both models loaded in the project dialog, which closed with Escape.
+- A temporary OBJ/MTL fixture verified model loading, material textures, screen replacement, and missing-file fallback. GPU resources and image bitmaps are disposed on unmount; rendering is static and updates on resize rather than running a continuous frame loop.
+- Static Urbanist desktop/mobile screen captures are in place. Screen scrolling animation remains deferred as requested. Local review screenshot: `artifacts/urbanist-template-desktop.webp`.
+
 ## Delivered experience
 
 Next.js production build, Tailwind, custom-styled shadcn/Radix primitives, and GSAP/ScrollTrigger. Home, selected work, two shareable project routes, approach, and email-first contact. The local production preview runs at http://localhost:8766/.

@@ -19,7 +19,8 @@ export function Portfolio() {
   const dialogBody = useRef<HTMLDivElement>(null);
   const nextAnimation = useRef<gsap.core.Tween | null>(null);
   const pendingFocus = useRef<(() => void) | null>(null);
-  const [project, setProject] = useState<Project>(projects[0]);
+  const [projectSlug, setProjectSlug] = useState<string>(projects[0].slug);
+  const project = projects.find(item => item.slug === projectSlug) ?? projects[0];
   const [open, setOpen] = useState(false);
   const [manualReduced, setManualReduced] = useState(false);
   const [systemReduced, setSystemReduced] = useState(false);
@@ -160,7 +161,7 @@ export function Portfolio() {
   function openProject(selected: Project, button: HTMLButtonElement) {
     nextAnimation.current?.kill();
     opener.current = button;
-    setProject(selected);
+    setProjectSlug(selected.slug);
     setOpen(true);
   }
   function moveRow(event: React.PointerEvent<HTMLButtonElement>) {
@@ -181,11 +182,11 @@ export function Portfolio() {
   async function nextProject() {
     const next = project.slug === 'pebble' ? projects[1] : projects[0];
     const body = dialogBody.current;
-    if (!body || reduced) { setProject(next); return; }
+    if (!body || reduced) { setProjectSlug(next.slug); return; }
     const { gsap } = await import('gsap');
     nextAnimation.current?.kill();
     nextAnimation.current = gsap.to(body, { clipPath: 'inset(0 0 0 100%)', duration: .22, ease: 'power2.in', onComplete: () => {
-      setProject(next);
+      setProjectSlug(next.slug);
       body.closest<HTMLElement>('[data-project-scroll]')?.scrollTo({ top: 0, behavior: 'instant' });
       gsap.set(body, { clipPath: 'inset(0 100% 0 0)' });
       nextAnimation.current = gsap.to(body, { clipPath: 'inset(0 0 0 0)', duration: .4, ease: 'power3.out', clearProps: 'clipPath' });
@@ -205,7 +206,7 @@ export function Portfolio() {
     <main id="main">
       <div className="chapter-shell" id="home"><div className="chapter-track">
         <section className="home-chapter" aria-labelledby="home-title" onPointerMove={moveHero} onPointerLeave={event => { event.currentTarget.style.setProperty('--mark-x', '0px'); event.currentTarget.style.setProperty('--mark-y', '0px'); }}><div className="chapter-meta"><span>Small businesses. Strong identities.</span><span>Web design &amp; development</span></div><h1 id="home-title" aria-label="Local business. Uncommon websites."><span className="headline-mask"><span className="headline-line">LOCAL BUSINESS.</span></span><span className="headline-mask"><span className="headline-line accent">UNCOMMON</span></span><span className="headline-mask"><span className="headline-line">WEBSITES.</span></span></h1><div className="home-bottom"><p>Your place has character.<br />Your website could, too.</p><button className="work-cta" onClick={() => navigate('work')}>Explore selected work <span><ArrowUpRight size={28} aria-hidden /></span></button></div><div className="signal-ribbon" aria-hidden><span>REAL PLACES.</span><span>DIGITAL PRESENCE.</span><span>REAL PLACES.</span></div><span className="ghost-mark" aria-hidden><span>n.</span></span><span className="scroll-cue mono">Scroll to meet the work <ArrowRight size={15} aria-hidden /></span></section>
-        <section className="work-chapter" id="work" aria-labelledby="work-title"><div className="chapter-meta"><button onClick={() => navigate('home')} className="back-home"><ArrowLeft size={16} aria-hidden /> Back to home</button></div><h2 id="work-title" tabIndex={-1}>BUILT FOR<br /><span className="accent">THEIR WORLD.</span></h2><div className="project-index">{projects.map(p => <button key={p.slug} className="project-row" onClick={event => openProject(p, event.currentTarget)} onPointerMove={moveRow} onPointerLeave={event => { delete event.currentTarget.dataset.pointer; event.currentTarget.style.setProperty('--hover-x', '0px'); }} aria-label={`Explore ${p.name} project`}><span className="project-number mono">{p.number} / {p.category}</span><span className="project-name">{p.name}</span><span className="project-thumb"><Image src={p.venue} alt="" fill sizes="160px" /></span><span className="project-action">Explore <ArrowUpRight size={24} aria-hidden /></span><span className="cursor-tether" aria-hidden /><span className="cursor-cross" aria-hidden /></button>)}</div><span className="work-scroll-cue mono">Continue scrolling to reveal the projects <ArrowRight size={15} aria-hidden /></span><div className="work-bottom"><span>Websites that feel like the places behind them.</span><a href="#contact" onClick={event => navigateSection(event, 'contact')}>Have a place in mind? <ArrowUpRight size={16} aria-hidden /></a></div></section>
+        <section className="work-chapter" id="work" aria-labelledby="work-title"><div className="chapter-meta"><button onClick={() => navigate('home')} className="back-home"><ArrowLeft size={16} aria-hidden /> Back to home</button></div><h2 id="work-title" tabIndex={-1}>BUILT FOR<br /><span className="accent">THEIR WORLD.</span></h2><div className="project-index">{projects.map((p: Project) => <button key={p.slug} className="project-row" onClick={event => openProject(p, event.currentTarget)} onPointerMove={moveRow} onPointerLeave={event => { delete event.currentTarget.dataset.pointer; event.currentTarget.style.setProperty('--hover-x', '0px'); }} aria-label={`Explore ${p.name} project`}><span className="project-number mono">{p.number} / {p.category}</span><span className="project-name">{p.name}</span><span className="project-thumb"><Image src={p.workThumbnail ?? p.venue} alt="" fill sizes="160px" /></span><span className="project-action">Explore <ArrowUpRight size={24} aria-hidden /></span><span className="cursor-tether" aria-hidden /><span className="cursor-cross" aria-hidden /></button>)}</div><span className="work-scroll-cue mono">Continue scrolling to reveal the projects <ArrowRight size={15} aria-hidden /></span><div className="work-bottom"><span>Websites that feel like the places behind them.</span><a href="#contact" onClick={event => navigateSection(event, 'contact')}>Have a place in mind? <ArrowUpRight size={16} aria-hidden /></a></div></section>
       </div></div>
       <section className="in-context section-pad" aria-labelledby="context-title"><div className="context-heading" data-reveal><h2 id="context-title">THE PLACE.<br /><span className="accent">THE PRESENCE.</span></h2><p>A website is another way<br />to step inside your business.<br />It could feel like it belongs.</p></div>{projects.map(p => <article className="project-feature" key={p.slug}><div className="feature-heading"><div><span className="mono">{p.number} / {p.category} / BUCHAREST</span><h3>{p.name}</h3></div><span className={`project-status ${p.slug === 'pebble' ? 'status-progress' : ''}`}>{p.status}</span></div><div className="scene-open"><DeviceScene project={p} reduced={reduced} /><button className="scene-open-label" onClick={event => openProject(p, event.currentTarget)} aria-label={`Explore ${p.name} project`}>Explore project <ArrowUpRight size={18} aria-hidden /></button></div><div className="feature-description"><p>{p.title}<br /><span>{p.subtitle}</span></p><Link href={`/work/${p.slug}`}>Project details <ArrowUpRight size={18} aria-hidden /></Link></div></article>)}</section>
       <ApproachSection />

@@ -12,6 +12,8 @@ export type Project = {
   focus: readonly string[];
   venue: string;
   venueAlt: string;
+  /** Optional work-list photograph, separate from the device-scene background. */
+  workThumbnail?: string;
   desktop: string | null;
   mobile: string | null;
   url: string;
@@ -28,7 +30,7 @@ export const projects = [
     description: 'A small café with a character of its own. The website brings its warm, unhurried atmosphere online and makes the essentials easy to find: the place, the coffee, and the way in.',
     focus: ['An atmosphere you can feel', 'A clear route to the café', 'A considered mobile experience'],
     venue: '/images/pebble-logo.svg', venueAlt: 'Pebble logo placeholder — final artwork pending',
-    desktop: '/images/pebble-desktop.jpg', mobile: '/images/pebble-mobile.jpg',
+    desktop: '/images/pebble-laptop-hero-v3.webp', mobile: '/images/pebble-phone-hero-v3.webp',
     scene: { composition: 'left', backgroundPosition: '62% 50%', mobileBackgroundPosition: '60% 40%', models: portfolioDeviceModels },
     url: 'https://pebble2.vercel.app/', status: 'Nearing completion',
   },
@@ -37,8 +39,9 @@ export const projects = [
     title: 'Sound, culture, and late nights.', subtitle: 'An identity with a pulse.',
     description: 'A place in between coffee, culture, and after hours. The website gives its different scenes one shared home, with the menu, music, and location close at hand.',
     focus: ['An expressive visual identity', 'A menu made to explore', 'Sound, culture, and practical details'],
-    venue: '/images/urbanist-location.webp', venueAlt: 'The Urbanist interior with timber tables, custom speakers, and the violet mezzanine',
-    desktop: '/images/urbanist-desktop.webp', mobile: '/images/urbanist-mobile.webp',
+    venue: '/images/urbanist-location-20261014.webp', venueAlt: 'The Urbanist interior with timber tables, custom speakers, and the violet mezzanine',
+    workThumbnail: '/images/urbanist-thumbnail-retouched-v2.webp',
+    desktop: '/images/urbanist-laptop-hero-v3.webp', mobile: '/images/urbanist-phone-hero-v3.webp',
     scene: { composition: 'right', backgroundPosition: '50% 50%', mobileBackgroundPosition: '77% 50%', photoAnchored: true, backgroundBrightness: 1, models: portfolioDeviceModels },
     url: 'https://urbanist2.vercel.app/', status: 'Selected project',
   },

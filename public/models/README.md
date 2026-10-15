@@ -72,7 +72,7 @@ The 28° perspective camera measures the complete model silhouette to match over
 
 The fit guard backs the camera away if needed to keep the full keyboard and chassis inside a 2% margin rather than clipping them. The canvas host exposes `data-model-height`, `data-model-top`, `data-model-bottom`, `data-model-fit-clamped`, `data-model-clipped`, and screen measurements for verification. Fallback previews use the same overall-height and base alignment rules.
 
-Captures are drawn into aspect-preserving contained `CanvasTexture` images. Physical display aspects are 1.6024755814 for the laptop and 0.462015622 for the phone. The laptop uses zero insets so its website fills the corrected display; phone margins remain 6.5% at the top and 1.5% elsewhere so the header clears the Dynamic Island. Unused display space is dark `#080a08`, avoiding pale artificial bands inside the bezel. Current laptop captures have aspect 1.601769912; phone captures match the usable safe-area aspect at 0.487012987. Full captures remain visible without cropping or stretching. Fallback previews also use contain fitting.
+Captures are drawn into aspect-preserving contained `CanvasTexture` images. Physical display aspects are 1.6024755814 for the laptop and 0.462015622 for the phone. The laptop uses zero insets so its website fills the corrected display; phone margins remain 6.5% at the top and 1.5% elsewhere so the header clears the Dynamic Island. Unused display space is dark `#080a08`, avoiding pale artificial bands inside the bezel. Current v4 laptop captures have aspect 1.6025; unchanged v3 phone captures match the usable safe-area aspect at 0.487012987. Full captures remain visible without cropping or stretching. Fallback previews also use contain fitting.
 
 ## Replacement source files
 
@@ -107,14 +107,16 @@ The OBJ/FBX paths and screen names in these replacement examples must match the 
 
 ## Project screens and photographs
 
-The renderer uses each project's `desktop` capture for the laptop and `mobile` capture for the phone. Both projects now use fresh v3 hero captures from the top of their live websites. The earlier assets are preserved, including the old Pebble mobile image that showed the footer.
+The renderer uses each project's `desktop` capture for the laptop and `mobile` capture for the phone. Laptop heroes were refreshed from both updated live websites on 15 October 2026 as v4 assets. Phone heroes remain the v3 captures from 14 October; earlier assets are preserved.
 
-| Project | Laptop capture, 1267 × 791 | Phone capture, 375 × 770 |
+| Project | Laptop v4 capture, 1282 × 800 | Phone v3 capture, 375 × 770 |
 | --- | --- | --- |
-| Urbanist | `/images/urbanist-laptop-hero-v3.webp` | `/images/urbanist-phone-hero-v3.webp` |
-| Pebble | `/images/pebble-laptop-hero-v3.webp` | `/images/pebble-phone-hero-v3.webp` |
+| Urbanist | `/images/urbanist-laptop-hero-v4.webp` | `/images/urbanist-phone-hero-v3.webp` |
+| Pebble | `/images/pebble-laptop-hero-v4.webp` | `/images/pebble-phone-hero-v3.webp` |
 
-Each v3 image removes only the browser's 15 rightmost scrollbar columns: source laptops are 1282 × 791, with chrome starting at x1267; source phones are 390 × 770, with chrome starting at x375. Repeated colour-edge detection confirms each boundary across 31–36 rows without assuming a white page background. Lossless WebP round trips preserve every retained RGB value and the full source height. Usable laptop and phone aspects differ from their fit targets by only 0.044% and 0.023%, respectively. `artifacts/model-work/prepare-live-hero-v3.mjs` reproduces the batch, with checks in `live-hero-v3-report.json`.
+V4 laptop sources are `artifacts/2026-10-15/{project}-live-laptop-v4-clipped.jpg`. Direct client-area screenshots capture the complete 1282 × 800 website viewport without browser chrome, after fonts/images load at scroll position zero. The output keeps all 1,025,600 pixels: no image pixels are cropped or resized, every decoded RGB value is identical after lossless WebP encoding, and source JPEG hashes remain unchanged. Aspect 1.6025 differs from the physical display by only 0.001524%. `artifacts/model-work/prepare-live-laptop-v4.mjs` reproduces the conversion, with checks in `live-laptop-v4-report.json`.
+
+The retained v3 phone preparation removes only the browser's 15 rightmost scrollbar columns from 390 × 770 source screenshots, with chrome starting at x375. Boundary evidence spans 31–35 rows per phone capture. Lossless WebP preserves all remaining RGB values and the full source height; usable aspect differs from its target by 0.023%. The original batch processor and report remain `artifacts/model-work/prepare-live-hero-v3.mjs` and `live-hero-v3-report.json`.
 
 Screens currently show static images; screen animation is reserved for a later change. A live iframe cannot supply a model texture.
 
@@ -134,7 +136,7 @@ Use `backgroundPosition` and optional `mobileBackgroundPosition` to crop each pr
 
 Urbanist's `/images/urbanist-location-20261014.webp` is a 2131 × 2057 crop derived by removing 269 px from the left of the preserved 2400 × 2057 HEIC conversion. Total left crop is approximately 22.3% of the original 4032 × 3024 image. The existing 94% brightness / 96% saturation grade is retained, with no upscaling or perspective warp. The laptop covers the large foreground ashtray used as its placement reference on desktop and mobile.
 
-Urbanist uses `backgroundBrightness: 1` and `photoAnchored: true`, which disables group scroll movement to keep the devices fixed to the photographed surface. Its screen captures follow the shared v3 preparation described above. Pebble retains its logo placeholder until a venue photograph is supplied.
+Urbanist uses `backgroundBrightness: 1` and `photoAnchored: true`, which disables group scroll movement to keep the devices fixed to the photographed surface. Its screens use the laptop v4 and phone v3 preparation described above. Pebble retains its logo placeholder until a venue photograph is supplied.
 
 The preview stays visible until model resources and the first render succeed. Missing files, failed textures, an unmatched `screenName` when applying a capture, or unavailable WebGL retain the preview. Resources load near the viewport, with rendering on layout changes rather than a continuous animation loop.
 

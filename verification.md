@@ -124,3 +124,10 @@ Supplied Neue Machina files and local Satoshi variable font installed. Fixed nav
 - Independent GLTFLoader validation confirmed the laptop screen's two triangles use complete 0..1 UVs with matching linear mappings, orthogonal physical axes, and aspect 1.60247558. There is no UV shear or missing image region. Existing contained screen fitting, device positions, and body sizing remain unchanged.
 - Both devices rendered ready in the user's 560 × 479 preview and the 1536 × 960 standalone view, with no clipping or fit clamping. The existing homepage hero remains selected; the supplied culture screenshot is a proportion reference. A later hero redesign will require a fresh capture when ready.
 - Production build and TypeScript passed. Final visual evidence: `artifacts/2026-10-15/laptop-preview-corrected.jpg` and `laptop-scaling-desktop.jpg`.
+
+## Updated Vercel laptop interfaces — 15 October 2026
+
+- Checked the current `pebble2.vercel.app` and `urbanist2.vercel.app` home pages after the user's aspect-ratio deployments. Captured both at scroll position zero with loaded fonts and hero images. Urbanist's updated hero now occupies the available viewport height.
+- Laptop previews now use `pebble-laptop-hero-v4.webp` and `urbanist-laptop-hero-v4.webp`. Both are direct 1282 × 800 browser-content clips, excluding browser chrome at capture time. Their aspect 1.6025 differs from the physical display by only 0.001524%. No screenshot pixels were cropped, stretched, or resized afterward; every decoded RGB value and both original JPEG hashes were preserved. Validation is recorded in `artifacts/model-work/live-laptop-v4-report.json`.
+- The shared project configuration updates laptop displays in portfolio sections, project dialogs, and standalone routes. Phone images, device geometry, placement, equal body heights, lighting, and venue photographs retain their previous settings.
+- Production build and TypeScript passed after the v4 paths were configured. Final visual checks are `artifacts/2026-10-15/urbanist-laptop-v4-desktop.jpg` and `pebble-laptop-v4-desktop.jpg`.

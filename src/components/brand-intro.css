@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'Intro Mono';
+  src: url('/fonts/space-mono.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 400;
+}
+
+html:has(.brand-intro) { overflow:hidden; overscroll-behavior:none; scrollbar-gutter:stable; }
+/* Keep the page in layout so its fonts, images and motion modules load behind the intro. */
+.brand-intro {
+  position:fixed; inset:0; z-index:1000; display:grid; place-items:center;
+  background:var(--ink); color:var(--chalk); isolation:isolate;
+  touch-action:none; user-select:none; overflow:hidden;
+}
+.intro-stage { position:relative; width:min(84vw,760px); height:220px; display:grid; place-items:center; }
+.intro-terminal { width:min(100%,450px); }
+.intro-command { display:flex; align-items:center; gap:18px; min-height:1.9em; font-family:'Intro Mono',monospace; font-size:clamp(14px,2.1vw,24px); line-height:1.9; }
+.intro-prompt { color:var(--signal); opacity:0; }
+.intro-typed { display:block; width:0; max-width:100%; overflow:hidden; white-space:nowrap; border-right:2px solid transparent; box-sizing:content-box; }
+.intro-logo { position:absolute; width:min(74vw,660px); opacity:0; transform:translateY(12px); }
+.intro-logo svg { display:block; width:100%; height:auto; overflow:visible; }
+.intro-logo-dot { fill:var(--signal); }
+.intro-logo-middle { transform-box:fill-box; transform-origin:center; }
+
+.brand-intro[data-playing=true] { animation:intro-depart 4000ms linear both; }
+.brand-intro[data-playing=true] .intro-terminal { animation:intro-terminal-out 220ms ease-in 2030ms both; }
+.brand-intro[data-playing=true] .intro-prompt { animation:intro-prompt-in 1ms var(--typing-delay) both; }
+.brand-intro[data-playing=true] .intro-typed {
+  animation:intro-type var(--typing-duration) steps(var(--characters),end) var(--typing-delay) both,
+    intro-caret var(--typing-duration) step-end var(--typing-delay) forwards;
+}
+.brand-intro[data-playing=true] .intro-logo { animation:intro-logo-in 530ms cubic-bezier(.16,1,.3,1) 2130ms both; }
+.brand-intro[data-playing=true] .intro-logo-middle { animation:intro-contract 500ms cubic-bezier(.76,0,.24,1) 2680ms both; }
+.brand-intro[data-playing=true] .intro-logo-n { animation:intro-n 600ms cubic-bezier(.76,0,.24,1) 2680ms both; }
+.brand-intro[data-playing=true] .intro-logo-dot { animation:intro-dot 600ms cubic-bezier(.76,0,.24,1) 2680ms both; }
+
+@keyframes intro-type { from { width:0; } to { width:calc(var(--characters) * 1ch); } }
+@keyframes intro-caret { from { border-color:var(--signal); } to { border-color:transparent; } }
+@keyframes intro-prompt-in { from { opacity:0; } to { opacity:1; } }
+@keyframes intro-terminal-out { to { opacity:0; transform:translateY(-10px); } }
+@keyframes intro-logo-in { to { opacity:1; transform:translateY(0); } }
+@keyframes intro-contract { to { opacity:0; transform:scaleX(.45); } }
+@keyframes intro-n { to { transform:translateX(2118px); } }
+@keyframes intro-dot { to { transform:translateX(-2118px); } }
+@keyframes intro-depart { 0%,86% { opacity:1; } 100% { opacity:0; } }
+
+@media (max-width:600px) {
+  .intro-command { gap:12px; }
+}
+
+/* Preserve a brief brand moment without typing, contraction or travel. */
+.brand-intro[data-motion=reduced] { animation:intro-reduced-depart 1350ms linear both; }
+.brand-intro[data-motion=reduced] .intro-terminal { display:none; }
+.brand-intro[data-motion=reduced] .intro-logo { opacity:1; transform:none; animation:none; }
+.brand-intro[data-motion=reduced] .intro-logo-middle,
+.brand-intro[data-motion=reduced] .intro-logo-n,
+.brand-intro[data-motion=reduced] .intro-logo-dot { animation:none; }
+@keyframes intro-reduced-depart { 0%,78% { opacity:1; } 100% { opacity:0; } }
+@media (prefers-reduced-motion:reduce) {
+  .brand-intro[data-motion=reduced] { animation-duration:1350ms !important; }
+}

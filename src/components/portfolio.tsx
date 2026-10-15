@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ArrowRight, ArrowLeft, X, Copy, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { ContactForm } from '@/components/contact-form';
 import { Vitals } from '@/components/vitals';
 import { ApproachSection } from '@/components/approach-section';
 import { CursorSignature } from '@/components/cursor-signature';
+import { BrandIntro } from '@/components/brand-intro';
 import { projects, email, contra, type Project } from '@/lib/projects';
 
 export function Portfolio() {
@@ -19,6 +20,11 @@ export function Portfolio() {
   const dialogBody = useRef<HTMLDivElement>(null);
   const nextAnimation = useRef<gsap.core.Tween | null>(null);
   const pendingFocus = useRef<(() => void) | null>(null);
+  const headlineAnimation = useRef<gsap.core.Tween | null>(null);
+  const introRevealed = useRef(false);
+  const [introPlaying, setIntroPlaying] = useState(true);
+  const revealIntro = useCallback(() => { introRevealed.current = true; headlineAnimation.current?.play(); }, []);
+  const completeIntro = useCallback(() => { introRevealed.current = true; headlineAnimation.current?.play(); setIntroPlaying(false); }, []);
   const [projectSlug, setProjectSlug] = useState<string>(projects[0].slug);
   const project = projects.find(item => item.slug === projectSlug) ?? projects[0];
   const [open, setOpen] = useState(false);
@@ -53,7 +59,7 @@ export function Portfolio() {
       const work = node.querySelector<HTMLElement>('.work-chapter')!;
       const context = gsap.context(() => {
         if (!reduced && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          gsap.from('.headline-line', { yPercent: 112, skewY: 4, duration: .68, stagger: .11, ease: 'power3.out', clearProps: 'transform' });
+          if (!introRevealed.current) headlineAnimation.current = gsap.from('.headline-line', { yPercent: 112, skewY: 4, duration: .68, stagger: .11, ease: 'power3.out', clearProps: 'transform', paused: true });
           gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el => gsap.from(el, { y: 24, opacity: .4, duration: .5, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true } }));
           gsap.utils.toArray<HTMLElement>('[data-approach-reveal]').forEach(el => {
             gsap.from(el, { opacity: 0, y: 28, duration: .85, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 86%', toggleActions: 'play none none reverse' } });
@@ -133,7 +139,7 @@ export function Portfolio() {
       }, node);
       ScrollTrigger.sort();
       ScrollTrigger.refresh();
-      cleanup = () => { media.revert(); context.revert(); };
+      cleanup = () => { media.revert(); context.revert(); headlineAnimation.current = null; };
     });
     return () => { disposed = true; cleanup(); document.documentElement.style.scrollBehavior = previousScrollBehavior; };
   }, [reduced]);
@@ -200,8 +206,10 @@ export function Portfolio() {
     setManualReduced(next);
     try { localStorage.setItem('noawezah-motion', next ? 'reduce' : 'full'); } catch {}
   }
-  return <Dialog open={open} onOpenChange={setOpen}><div ref={root} className="portfolio" data-reduced={reduced}>
-    <Vitals /><CursorSignature disabled={reduced || open} /><a href="#main" className="skip-link">Skip to content</a>
+  return <Dialog open={open} onOpenChange={setOpen}>
+    {introPlaying ? <BrandIntro onReveal={revealIntro} onComplete={completeIntro} /> : null}
+    <div ref={root} id="portfolio-content" className="portfolio" data-reduced={reduced}>
+    <Vitals /><CursorSignature disabled={reduced || open || introPlaying} /><a href="#main" className="skip-link">Skip to content</a>
     <header className="site-nav"><button className="wordmark" onClick={() => navigate('home')} aria-label="Noawezah home">noawezah<span>.</span></button><span className="nav-meta">Independent web design<br />Ahad Zaidi / Bucharest</span><nav aria-label="Main navigation"><button onClick={() => navigate('work')}>Work <ArrowUpRight size={15} aria-hidden /></button><a href="#approach" onClick={event => navigateSection(event, 'approach')}>Approach</a><a href="#contact" className="nav-contact" onClick={event => navigateSection(event, 'contact')}>Let’s talk <ArrowUpRight size={16} aria-hidden /></a></nav></header>
     <main id="main">
       <div className="chapter-shell" id="home"><div className="chapter-track">

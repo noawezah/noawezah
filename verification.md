@@ -131,3 +131,14 @@ Supplied Neue Machina files and local Satoshi variable font installed. Fixed nav
 - Laptop previews now use `pebble-laptop-hero-v4.webp` and `urbanist-laptop-hero-v4.webp`. Both are direct 1282 × 800 browser-content clips, excluding browser chrome at capture time. Their aspect 1.6025 differs from the physical display by only 0.001524%. No screenshot pixels were cropped, stretched, or resized afterward; every decoded RGB value and both original JPEG hashes were preserved. Validation is recorded in `artifacts/model-work/live-laptop-v4-report.json`.
 - The shared project configuration updates laptop displays in portfolio sections, project dialogs, and standalone routes. Phone images, device geometry, placement, equal body heights, lighting, and venue photographs retain their previous settings.
 - Production build and TypeScript passed after the v4 paths were configured. Final visual checks are `artifacts/2026-10-15/urbanist-laptop-v4-desktop.jpg` and `pebble-laptop-v4-desktop.jpg`.
+
+## Brand intro — 15 October 2026
+
+- Added a mandatory four-second homepage opening: three command-prompt lines, the original outlined noawezah. wordmark, contraction to the existing n. symbol, and a fade into the homepage headline. Ink/chalk/lime match the portfolio palette. There are no intro controls.
+- The portfolio stays mounted underneath. Fonts, initial images and motion modules can load during playback; the existing offscreen 3D loading remains deferred. Content is inert and native scrolling is locked until the finite sequence ends. Headline motion starts during the fade; animation code arriving afterward leaves the visible headline alone.
+- Production build and TypeScript passed. Browser checks passed at 1440×900, 390×844 and 320×780, with no horizontal overflow or application errors. Wheel/PageDown/Tab could not bypass the intro; content and navigation unlocked afterward.
+- System and stored reduced-motion preferences use a static brand treatment lasting about 1.35 seconds. The no-JavaScript fallback leaves the page and project links usable.
+- Simulated weaker-device check passed with 4× CPU throttling, 120 ms network latency and 180 KB/s download throughput. This is a local simulation, not physical-device field testing.
+- Both GSAP chunks were separately delayed by 6.2 seconds. Across 205 sampled frames after the intro, the headline remained visible with no late entrance flash or application errors.
+- Screenshots and check results: artifacts/intro/. Local production preview: http://localhost:8767/.
+- Intro refinement: removed top/bottom metadata, divider and small caption. Only the three typed service lines and original logo sequence remain. Cursor fill now applies only during the active row's typing interval, without appearing on future/completed rows. Checked 17 timeline positions at desktop and mobile widths; production build passed.

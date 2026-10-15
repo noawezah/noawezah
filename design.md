@@ -13,7 +13,7 @@ Selected by Ahad on 10 October 2026 after the three-direction board and interact
 - Hero reserves the ribbon's rotated footprint inside the first viewport; the scroll cue sits above it. No trailing lime edge survives the Work landing.
 - Section index captions and their separator lines are removed; project row dividers remain.
 - Natural wheel, trackpad, keyboard, and touch scrolling. No smooth-scroll proxy. On mobile, horizontal scroll choreography becomes stacked sections.
-- No loading screen, fake progress bar, autoplay video, or decorative particles.
+- A short, mandatory opening sequence (15 October update): command-prompt typing → original noawezah. wordmark → n. mark → page reveal, in ink/chalk/lime. Keep the portfolio mounted and loading underneath; preserve offscreen 3D lazy loading. No skip controls, fake progress bar, autoplay video, or decorative particles. Reduced motion receives a brief static brand treatment.
 
 ## Interaction map
 
